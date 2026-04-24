@@ -1,0 +1,28 @@
+backend:
+  name: github
+  repo: MasonKimball05/portfolio
+  branch: main
+  base_url: https://portfolio-oauth.masonkimball.workers.dev
+
+media_folder: public/images/berlin
+public_folder: /images/berlin
+
+collections:
+  - name: berlin
+    label: Berlin Journal
+    folder: content/berlin
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - label: Cover Photo
+        name: cover
+        widget: image
+        required: false
+      - { label: Body, name: body, widget: markdown }
+      - label: Photos
+        name: photos
+        widget: list
+        required: false
+        field: { label: Photo, name: photo, widget: image }
