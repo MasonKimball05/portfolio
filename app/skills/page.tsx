@@ -76,7 +76,7 @@ export default function Skills() {
           </a>
           <div
             data-iframe-width="290"
-            data-iframe-height="340"
+            data-iframe-height="240"
             data-share-badge-id="272c81a8-8efa-4cbe-94b3-ba5e033d8ba3"
             data-share-badge-host="https://www.credly.com"
           />
