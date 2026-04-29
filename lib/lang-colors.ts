@@ -1,0 +1,16 @@
+export const LANG_COLORS: Record<string, string> = {
+  Python: "bg-blue-500",
+  TypeScript: "bg-blue-400",
+  JavaScript: "bg-yellow-400",
+  CSS: "bg-purple-400",
+  HTML: "bg-orange-500",
+  C: "bg-slate-400",
+  "C++": "bg-pink-500",
+  Swift: "bg-orange-400",
+  Go: "bg-cyan-400",
+  Rust: "bg-orange-600",
+  Ruby: "bg-red-500",
+  Java: "bg-red-400",
+  Shell: "bg-green-500",
+  Jinja: "bg-slate-500",
+}

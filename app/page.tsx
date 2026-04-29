@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
+import { LangDot } from "@/components/lang-dot"
 import Link from "next/link"
 
 interface GitHubRepo {
@@ -124,7 +125,7 @@ export default async function Home() {
             className="flex items-center justify-between border border-border px-4 py-3 hover:bg-muted transition-colors group"
           >
             <div className="flex items-center gap-3">
-              <ShieldCheck size={28} className="text-muted-foreground flex-shrink-0" />
+              <ShieldCheck size={28} className="text-green-500 flex-shrink-0" />
               <div className="space-y-0.5">
                 <p className="text-sm font-medium group-hover:underline">Certified in Cybersecurity (CC)</p>
                 <p className="text-xs text-muted-foreground">ISC2 · Verified</p>
@@ -187,11 +188,9 @@ function ProjectRow({
         {description && <p className="text-xs text-muted-foreground">{description}</p>}
       </div>
       {languages.length > 0 && (
-        <div className="flex gap-1.5 flex-shrink-0 pt-0.5">
+        <div className="flex gap-3 flex-shrink-0 pt-0.5">
           {languages.map((lang) => (
-            <span key={lang} className="text-xs border border-border px-1.5 py-0.5 text-muted-foreground">
-              {lang}
-            </span>
+            <LangDot key={lang} lang={lang} />
           ))}
         </div>
       )}

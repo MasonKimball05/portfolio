@@ -3,6 +3,7 @@ backend:
   repo: MasonKimball05/portfolio
   branch: main
   base_url: https://portfolio-oauth.masonkimball.workers.dev
+  site_domain: masonkimball.dev
 
 media_folder: public/images/berlin
 public_folder: /images/berlin

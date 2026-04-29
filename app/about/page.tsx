@@ -24,7 +24,7 @@ export default function About() {
         {/* Education */}
         <section className="space-y-4">
           <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Education</h2>
-          <div className="border border-border divide-y divide-border">
+          <div className="border border-border border-l-4 border-l-blue-500 divide-y divide-border">
             <div className="px-4 py-4 space-y-1">
               <p className="text-sm font-medium">Samford University</p>
               <p className="text-xs text-muted-foreground">B.S. Computer Science · Cyber Security concentration · German minor</p>
@@ -41,12 +41,12 @@ export default function About() {
           <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Currently</h2>
           <div className="border border-border divide-y divide-border">
             {[
-              { label: "EVP", detail: "Executive Vice President, Beta Theta Pi Alpha Mu Chapter" },
-              { label: "Parliament", detail: "Building chapter admin software — Django + PostgreSQL" },
-              { label: "German", detail: "Working toward B2, heading to Berlin for immersion this summer" },
-            ].map(({ label, detail }) => (
+              { label: "EVP", detail: "Executive Vice President, Beta Theta Pi Alpha Mu Chapter", color: "text-amber-500" },
+              { label: "Parliament", detail: "Building chapter admin software — Django + PostgreSQL", color: "text-blue-500" },
+              { label: "German", detail: "Working toward B2, heading to Berlin for immersion this summer", color: "text-green-500" },
+            ].map(({ label, detail, color }) => (
               <div key={label} className="px-4 py-3 flex gap-6">
-                <span className="text-xs text-muted-foreground w-20 flex-shrink-0 pt-0.5">{label}</span>
+                <span className={`text-xs w-20 flex-shrink-0 pt-0.5 font-medium ${color}`}>{label}</span>
                 <span className="text-sm">{detail}</span>
               </div>
             ))}
