@@ -63,12 +63,12 @@ export default async function Home() {
     <div className="min-h-screen flex flex-col bg-background text-foreground">
 
       {/* Main */}
-      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-24 space-y-24">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 space-y-14 sm:space-y-24">
 
         {/* Hero */}
         <section className="space-y-4">
           <p className="text-sm text-muted-foreground">hi, i'm</p>
-          <h1 className="text-4xl font-semibold tracking-tight">Mason Kimball</h1>
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Mason Kimball</h1>
           <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
             CS student at Samford University, concentrating in Cyber Security, with a minor in German.
             I like to build things — mostly web apps, sometimes for my fraternity chapter.
@@ -181,7 +181,7 @@ function ProjectRow({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-start justify-between gap-6 px-4 py-4 hover:bg-muted transition-colors group"
+      className="flex items-start justify-between gap-3 sm:gap-6 px-4 py-4 hover:bg-muted transition-colors group"
     >
       <div className="space-y-1 min-w-0">
         <p className="text-sm font-medium group-hover:underline">{name}</p>

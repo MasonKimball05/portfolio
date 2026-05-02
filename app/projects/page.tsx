@@ -51,6 +51,7 @@ async function getRepos(): Promise<RepoWithLanguages[]> {
   }
 }
 
+import Link from "next/link"
 import { LANG_COLORS } from "@/lib/lang-colors"
 import { LangDot } from "@/components/lang-dot"
 
@@ -70,9 +71,10 @@ const FEATURED = [
       "Built and maintained solo — currently hardening for handoff to future leadership before I graduate",
     ],
     tech: ["Python", "Django", "PostgreSQL", "Tailwind CSS", "Alpine.js"],
-    href: "https://github.com/MasonKimball05/Parliament-New",
+    href: "/projects/parliament",
     status: "Active",
     accent: "border-l-blue-500",
+    internal: true,
   },
   {
     name: "Portfolio",
@@ -109,9 +111,9 @@ export default async function Projects() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-24 space-y-16">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 space-y-10 sm:space-y-16">
 
-        <h1 className="text-3xl font-semibold tracking-tight">projects</h1>
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">projects</h1>
 
         {/* Featured */}
         <section className="space-y-4">
@@ -151,6 +153,7 @@ function FeaturedCard({
   href,
   status,
   accent,
+  internal,
 }: {
   name: string
   tagline: string
@@ -159,16 +162,13 @@ function FeaturedCard({
   href: string
   status: string
   accent: string
+  internal?: boolean
 }) {
   const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES["Archived"]
+  const className = `block border border-border border-l-4 ${accent} px-6 py-5 hover:bg-muted transition-colors group space-y-4`
 
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`block border border-border border-l-4 ${accent} px-6 py-5 hover:bg-muted transition-colors group space-y-4`}
-    >
+  const content = (
+    <>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-medium group-hover:underline">{name}</p>
@@ -194,6 +194,16 @@ function FeaturedCard({
           </span>
         ))}
       </div>
+    </>
+  )
+
+  if (internal) {
+    return <Link href={href} className={className}>{content}</Link>
+  }
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      {content}
     </a>
   )
 }

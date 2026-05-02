@@ -27,7 +27,7 @@ const SKILLS = [
 export default function Skills() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-24 space-y-16">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 space-y-10 sm:space-y-16">
 
         <h1 className="text-3xl font-semibold tracking-tight">skills</h1>
 

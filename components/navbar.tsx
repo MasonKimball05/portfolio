@@ -19,7 +19,7 @@ export function Navbar() {
   const pathname = usePathname()
 
   return (
-    <nav className="border-b border-border px-6 py-4">
+    <nav className="border-b border-border px-4 sm:px-6 py-4">
       <div className="max-w-3xl mx-auto flex items-center justify-between">
 
           {pathname !== "/" ? (
@@ -32,7 +32,7 @@ export function Navbar() {
               <span className="text-sm font-medium">mason kimball</span>
           }
 
-        <div className="flex items-center gap-6 text-sm">
+        <div className="flex items-center gap-3 sm:gap-6 text-sm">
           {pathname !== "/" && (
             <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
               home

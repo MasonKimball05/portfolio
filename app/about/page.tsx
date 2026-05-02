@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 export default function About() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-24 space-y-16">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 space-y-10 sm:space-y-16">
 
         {/* Intro */}
         <section className="space-y-4">
@@ -45,7 +45,7 @@ export default function About() {
               { label: "Parliament", detail: "Building chapter admin software — Django + PostgreSQL", color: "text-blue-500" },
               { label: "German", detail: "Working toward B2, heading to Berlin for immersion this summer", color: "text-green-500" },
             ].map(({ label, detail, color }) => (
-              <div key={label} className="px-4 py-3 flex gap-6">
+              <div key={label} className="px-4 py-3 flex gap-3 sm:gap-6">
                 <span className={`text-xs w-20 flex-shrink-0 pt-0.5 font-medium ${color}`}>{label}</span>
                 <span className="text-sm">{detail}</span>
               </div>
