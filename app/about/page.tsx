@@ -1,5 +1,11 @@
+import type { Metadata } from "next"
 import Script from "next/script"
 import { Button } from "@/components/ui/button"
+
+export const metadata: Metadata = {
+  title: "About — Mason Kimball",
+  description: "CS student at Samford University, concentrating in Cyber Security, with a minor in German.",
+}
 
 export default function About() {
   return (

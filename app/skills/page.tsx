@@ -1,4 +1,10 @@
+import type { Metadata } from "next"
 import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
+
+export const metadata: Metadata = {
+  title: "Skills — Mason Kimball",
+  description: "Languages, frameworks, tools, and certifications.",
+}
 import Script from "next/script"
 
 const SKILLS = [

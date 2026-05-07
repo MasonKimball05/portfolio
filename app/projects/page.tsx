@@ -1,3 +1,10 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Projects — Mason Kimball",
+  description: "A collection of projects I've built — from fraternity admin software to personal tools.",
+}
+
 interface GitHubRepo {
   id: number
   name: string
@@ -165,7 +172,7 @@ function FeaturedCard({
   internal?: boolean
 }) {
   const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES["Archived"]
-  const className = `block border border-border border-l-4 ${accent} px-6 py-5 hover:bg-muted transition-colors group space-y-4`
+  const className = `block border border-border border-l-4 ${accent} px-6 py-5 hover:bg-muted hover:shadow-sm transition-all group space-y-4`
 
   const content = (
     <>

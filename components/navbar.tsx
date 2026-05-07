@@ -9,10 +9,11 @@ import { usePathname } from "next/navigation"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const links = [
-  { href: "/about",    label: "about" },
-  { href: "/projects", label: "projects" },
-  { href: "/skills",   label: "skills" },
-  { href: "/berlin",   label: "berlin" },
+  { href: "/about",    label: "about",    hideOnMobile: false },
+  { href: "/projects", label: "projects", hideOnMobile: false },
+  { href: "/skills",   label: "skills",   hideOnMobile: false },
+  { href: "/berlin",   label: "berlin",   hideOnMobile: true  },
+  { href: "/contact",  label: "contact",  hideOnMobile: true  },
 ]
 
 export function Navbar() {
@@ -38,17 +39,16 @@ export function Navbar() {
               home
             </Link>
           )}
-          {links.map(({ href, label }) => (
+          {links.map(({ href, label, hideOnMobile }) => (
             <Link
               key={href}
               href={href}
-              // If the current path matches this link's href, apply blue.
-              // Otherwise use the default muted color.
-              className={
+              className={[
                 pathname === href
                   ? "text-blue-500"
-                  : "text-muted-foreground hover:text-foreground transition-colors"
-              }
+                  : "text-muted-foreground hover:text-foreground transition-colors",
+                hideOnMobile ? "hidden sm:inline" : "",
+              ].join(" ")}
             >
               {label}
             </Link>

@@ -1,5 +1,11 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { getAllPosts } from "@/lib/berlin"
+
+export const metadata: Metadata = {
+  title: "Berlin — Mason Kimball",
+  description: "Summer 2026 — language immersion at the Freie Universität Berlin. Photos and notes from the trip.",
+}
 
 export default function Berlin() {
   const posts = getAllPosts()
@@ -29,10 +35,14 @@ export default function Berlin() {
         ) : (
           <section className="space-y-4">
             <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Journal</h2>
-            <div className="border border-border border-l-4 border-l-green-500 px-6 py-5 space-y-2">
-              <p className="text-sm font-medium">Trip starts June 2026</p>
-              <p className="text-sm text-muted-foreground">
-                Posts will appear here once the trip starts. Check back in the summer.
+            <div className="border border-border border-l-4 border-l-green-500 px-6 py-5 space-y-3">
+              <p className="text-sm font-medium">Nothing here yet — trip starts June 2026</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                I'll be in Berlin for the summer doing language immersion at the Freie Universität.
+                Photos, notes, and observations will show up here as I post them. Come back in June.
+              </p>
+              <p className="text-xs text-muted-foreground">
+                — Mason
               </p>
             </div>
           </section>

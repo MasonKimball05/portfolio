@@ -1,7 +1,15 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { getAllPosts, getPost } from "@/lib/berlin"
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPost(slug)
+  if (!post) return {}
+  return { title: `${post.title} — Mason Kimball` }
+}
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }))

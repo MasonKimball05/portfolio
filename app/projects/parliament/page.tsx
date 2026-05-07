@@ -534,6 +534,52 @@ function MemberHomeContent() {
 
 type OfficerPage = 'home' | 'announcements' | 'new-event' | 'attendance' | 'minutes' | 'members' | 'committees'
 
+const OFFICER_NAV_LINKS: { label: string; page: OfficerPage }[] = [
+  { label: 'Announcements', page: 'announcements' },
+  { label: 'New Event',     page: 'new-event' },
+  { label: 'Attendance',    page: 'attendance' },
+  { label: 'Minutes',       page: 'minutes' },
+  { label: 'Members',       page: 'members' },
+  { label: 'Committees',    page: 'committees' },
+]
+
+function OfficerNavBar({
+  onHome,
+  onNavigate,
+  current,
+}: {
+  onHome: () => void
+  onNavigate: (page: OfficerPage) => void
+  current?: OfficerPage
+}) {
+  return (
+    <div className="bg-red-700 px-4 py-3 flex items-center justify-between rounded-t-lg">
+      <button onClick={onHome} className="flex items-center gap-3 hover:opacity-75 transition-opacity">
+        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+          Β
+        </div>
+        <span className="text-white font-semibold text-sm">Parliament</span>
+      </button>
+      <div className="hidden sm:flex items-center gap-3">
+        {OFFICER_NAV_LINKS.map(({ label, page }) => (
+          <button
+            key={page}
+            onClick={() => onNavigate(page)}
+            className={`text-xs transition-colors ${
+              current === page ? 'text-white font-semibold' : 'text-white/70 hover:text-white'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+        MK
+      </div>
+    </div>
+  )
+}
+
 function OfficerBackButton({ onBack }: { onBack: () => void }) {
   return (
     <button
@@ -546,7 +592,7 @@ function OfficerBackButton({ onBack }: { onBack: () => void }) {
 }
 
 // 1 — Announcements
-function AnnouncementsMockup({ onBack }: { onBack: () => void }) {
+function AnnouncementsMockup({ onBack, onNavigate }: { onBack: () => void; onNavigate: (p: OfficerPage) => void }) {
   const announcements = [
     { title: 'Spring Formal — Details Inside', author: 'Mason K.', date: 'Apr 28', body: 'Spring Formal is confirmed for May 9th at The Club. Tickets are $25 and must be purchased by May 5th. Bring your date!', pinned: true },
     { title: 'Chapter Meeting This Monday', author: 'Mason K.', date: 'Apr 25', body: 'Reminder that chapter meeting is this Monday at 7PM in the chapter room. Attendance is mandatory.', pinned: false },
@@ -554,7 +600,8 @@ function AnnouncementsMockup({ onBack }: { onBack: () => void }) {
   ]
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
+      <OfficerNavBar onHome={onBack} onNavigate={onNavigate} current="announcements" />
+      <div className="space-y-1 px-1">
         <OfficerBackButton onBack={onBack} />
         <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">Announcements</h2>
       </div>
@@ -586,10 +633,11 @@ function AnnouncementsMockup({ onBack }: { onBack: () => void }) {
 }
 
 // 4 — New Event
-function NewEventMockup({ onBack }: { onBack: () => void }) {
+function NewEventMockup({ onBack, onNavigate }: { onBack: () => void; onNavigate: (p: OfficerPage) => void }) {
   const [submitted, setSubmitted] = useState(false)
   if (submitted) return (
     <div className="space-y-4">
+      <OfficerNavBar onHome={onBack} onNavigate={onNavigate} current="new-event" />
       <OfficerBackButton onBack={onBack} />
       <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 text-center space-y-2">
         <div className="text-3xl">✅</div>
@@ -607,7 +655,8 @@ function NewEventMockup({ onBack }: { onBack: () => void }) {
   ]
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
+      <OfficerNavBar onHome={onBack} onNavigate={onNavigate} current="new-event" />
+      <div className="space-y-1 px-1">
         <OfficerBackButton onBack={onBack} />
         <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">New Event</h2>
       </div>
@@ -650,7 +699,7 @@ function NewEventMockup({ onBack }: { onBack: () => void }) {
 }
 
 // 5 — Event Attendance
-function AttendanceMockup({ onBack }: { onBack: () => void }) {
+function AttendanceMockup({ onBack, onNavigate }: { onBack: () => void; onNavigate: (p: OfficerPage) => void }) {
   const events = ['Chapter Meeting — Apr 28', 'Philanthropy 5K — Apr 19', 'Chapter Meeting — Apr 14']
   const [selected, setSelected] = useState(0)
   const members = [
@@ -670,7 +719,8 @@ function AttendanceMockup({ onBack }: { onBack: () => void }) {
   const counts = { Present: members.filter(m => m.status === 'Present').length, Excused: members.filter(m => m.status === 'Excused').length, Absent: members.filter(m => m.status === 'Absent').length }
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
+      <OfficerNavBar onHome={onBack} onNavigate={onNavigate} current="attendance" />
+      <div className="space-y-1 px-1">
         <OfficerBackButton onBack={onBack} />
         <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">Event Attendance</h2>
       </div>
@@ -712,7 +762,7 @@ function AttendanceMockup({ onBack }: { onBack: () => void }) {
 }
 
 // 6 — Chapter Minutes
-function MinutesMockup({ onBack }: { onBack: () => void }) {
+function MinutesMockup({ onBack, onNavigate }: { onBack: () => void; onNavigate: (p: OfficerPage) => void }) {
   const minutes = [
     { title: 'Chapter Meeting Minutes', date: 'Apr 28, 2025', recorder: 'Mason K.', items: 6 },
     { title: 'Chapter Meeting Minutes', date: 'Apr 14, 2025', recorder: 'Mason K.', items: 4 },
@@ -721,7 +771,8 @@ function MinutesMockup({ onBack }: { onBack: () => void }) {
   ]
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
+      <OfficerNavBar onHome={onBack} onNavigate={onNavigate} current="minutes" />
+      <div className="space-y-1 px-1">
         <OfficerBackButton onBack={onBack} />
         <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">Chapter Minutes</h2>
       </div>
@@ -750,7 +801,7 @@ function MinutesMockup({ onBack }: { onBack: () => void }) {
 }
 
 // 8 — Member List
-function MembersMockup({ onBack }: { onBack: () => void }) {
+function MembersMockup({ onBack, onNavigate }: { onBack: () => void; onNavigate: (p: OfficerPage) => void }) {
   const members = [
     { name: 'Mason Kimball',  id: '73', type: 'Active',  role: 'EVP' },
     { name: 'Chris Porter',   id: '71', type: 'Active',  role: 'President' },
@@ -765,7 +816,8 @@ function MembersMockup({ onBack }: { onBack: () => void }) {
   const visible = filter === 'All' ? members : members.filter(m => m.type === filter)
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
+      <OfficerNavBar onHome={onBack} onNavigate={onNavigate} current="members" />
+      <div className="space-y-1 px-1">
         <OfficerBackButton onBack={onBack} />
         <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">Member List</h2>
       </div>
@@ -804,7 +856,7 @@ function MembersMockup({ onBack }: { onBack: () => void }) {
 }
 
 // 10 — Manage Committees
-function ManageCommitteesMockup({ onBack }: { onBack: () => void }) {
+function ManageCommitteesMockup({ onBack, onNavigate }: { onBack: () => void; onNavigate: (p: OfficerPage) => void }) {
   const committees = [
     { code: 'EC',     name: 'Executive Committee',  chair: 'Chris P.',  members: 8  },
     { code: 'PHIL',   name: 'Philanthropy',          chair: 'Ben H.',    members: 12 },
@@ -814,7 +866,8 @@ function ManageCommitteesMockup({ onBack }: { onBack: () => void }) {
   ]
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
+      <OfficerNavBar onHome={onBack} onNavigate={onNavigate} current="committees" />
+      <div className="space-y-1 px-1">
         <OfficerBackButton onBack={onBack} />
         <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">Manage Committees</h2>
       </div>
@@ -892,15 +945,16 @@ function OfficerPortalContent() {
   const [page, setPage] = useState<OfficerPage>('home')
   const goHome = () => setPage('home')
 
-  if (page === 'announcements') return <AnnouncementsMockup onBack={goHome} />
-  if (page === 'new-event')     return <NewEventMockup      onBack={goHome} />
-  if (page === 'attendance')    return <AttendanceMockup    onBack={goHome} />
-  if (page === 'minutes')       return <MinutesMockup       onBack={goHome} />
-  if (page === 'members')       return <MembersMockup       onBack={goHome} />
-  if (page === 'committees')    return <ManageCommitteesMockup onBack={goHome} />
+  if (page === 'announcements') return <AnnouncementsMockup onBack={goHome} onNavigate={setPage} />
+  if (page === 'new-event')     return <NewEventMockup      onBack={goHome} onNavigate={setPage} />
+  if (page === 'attendance')    return <AttendanceMockup    onBack={goHome} onNavigate={setPage} />
+  if (page === 'minutes')       return <MinutesMockup       onBack={goHome} onNavigate={setPage} />
+  if (page === 'members')       return <MembersMockup       onBack={goHome} onNavigate={setPage} />
+  if (page === 'committees')    return <ManageCommitteesMockup onBack={goHome} onNavigate={setPage} />
 
   return (
     <div className="space-y-4">
+      <OfficerNavBar onHome={goHome} onNavigate={setPage} />
       <div className="rounded-lg p-4 text-white bg-gradient-to-r from-red-600 to-red-700">
         <div className="flex items-center gap-3">
           <svg className="w-8 h-8 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

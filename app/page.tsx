@@ -1,4 +1,10 @@
+import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
+
+export const metadata: Metadata = {
+  title: "Mason Kimball",
+  description: "CS student at Samford University. I build web apps, sometimes for my fraternity chapter.",
+}
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
 import { LangDot } from "@/components/lang-dot"
@@ -73,7 +79,7 @@ export default async function Home() {
             CS student at Samford University, concentrating in Cyber Security, with a minor in German.
             I like to build things — mostly web apps, sometimes for my fraternity chapter.
           </p>
-          <div className="flex gap-3 pt-2">
+          <div className="flex flex-wrap gap-3 pt-2">
             <Button asChild>
               <a href="https://github.com/MasonKimball05" target="_blank" rel="noopener noreferrer">
                 GitHub
@@ -81,6 +87,9 @@ export default async function Home() {
             </Button>
             <Button variant="outline" asChild>
               <Link href="/about">About me</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/contact">Contact</Link>
             </Button>
           </div>
         </section>
@@ -103,14 +112,9 @@ export default async function Home() {
           ) : (
             <p className="text-sm text-muted-foreground">Could not load repositories.</p>
           )}
-          <a
-            href="https://github.com/MasonKimball05"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
+          <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             all projects →
-          </a>
+          </Link>
         </section>
 
         {/* Skills */}
