@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import Script from "next/script"
+import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
 import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
@@ -62,13 +62,21 @@ export default function About() {
         {/* Certifications */}
         <section className="space-y-4">
           <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Certifications</h2>
-          <div
-            data-iframe-width="290"
-            data-iframe-height="340"
-            data-share-badge-id="272c81a8-8efa-4cbe-94b3-ba5e033d8ba3"
-            data-share-badge-host="https://www.credly.com"
-          />
-          <Script src="//cdn.credly.com/assets/utilities/embed.js" strategy="lazyOnload" />
+          <a
+            href="https://www.credly.com/badges/272c81a8-8efa-4cbe-94b3-ba5e033d8ba3/public_url"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between border border-border px-4 py-3 hover:bg-muted transition-colors group"
+          >
+            <div className="flex items-center gap-3">
+              <ShieldCheck size={28} className="text-green-500 flex-shrink-0" />
+              <div className="space-y-0.5">
+                <p className="text-sm font-medium group-hover:underline">Certified in Cybersecurity (CC)</p>
+                <p className="text-xs text-muted-foreground">ISC2 · Verified</p>
+              </div>
+            </div>
+            <span className="text-xs text-muted-foreground flex-shrink-0">verify →</span>
+          </a>
         </section>
 
         {/* Outside of code */}
