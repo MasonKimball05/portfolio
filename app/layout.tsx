@@ -19,11 +19,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://masonkimball.dev"),
   title: "Mason Kimball",
-  description: "CS student, developer, and Beta Theta Pi member.",
+  description: "CS student at Samford University. I build web apps, sometimes for my fraternity chapter.",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Mason Kimball",
+    title: "Mason Kimball",
+    description: "CS student at Samford University. I build web apps, sometimes for my fraternity chapter.",
+    url: "https://masonkimball.dev",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mason Kimball",
+    description: "CS student at Samford University. I build web apps, sometimes for my fraternity chapter.",
   },
 };
 

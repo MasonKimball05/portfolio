@@ -89,6 +89,9 @@ export default async function Home() {
               <Link href="/about">About me</Link>
             </Button>
             <Button variant="outline" asChild>
+              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+            </Button>
+            <Button variant="outline" asChild>
               <Link href="/contact">Contact</Link>
             </Button>
           </div>

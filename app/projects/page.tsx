@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Projects — Mason Kimball",
   description: "A collection of projects I've built — from fraternity admin software to personal tools.",
+  openGraph: { title: "Projects — Mason Kimball", description: "A collection of projects I've built — from fraternity admin software to personal tools." },
 }
 
 interface GitHubRepo {

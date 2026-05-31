@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 export const metadata: Metadata = {
   title: "About — Mason Kimball",
   description: "CS student at Samford University, concentrating in Cyber Security, with a minor in German.",
+  openGraph: { title: "About — Mason Kimball", description: "CS student at Samford University, concentrating in Cyber Security, with a minor in German." },
 }
 
 export default function About() {

@@ -4,6 +4,7 @@ import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
 export const metadata: Metadata = {
   title: "Skills — Mason Kimball",
   description: "Languages, frameworks, tools, and certifications.",
+  openGraph: { title: "Skills — Mason Kimball", description: "Languages, frameworks, tools, and certifications." },
 }
 import Script from "next/script"
 

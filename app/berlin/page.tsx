@@ -5,6 +5,7 @@ import { getAllPosts } from "@/lib/berlin"
 export const metadata: Metadata = {
   title: "Berlin — Mason Kimball",
   description: "Summer 2026 — language immersion at the Freie Universität Berlin. Photos and notes from the trip.",
+  openGraph: { title: "Berlin — Mason Kimball", description: "Summer 2026 — language immersion at the Freie Universität Berlin. Photos and notes from the trip." },
 }
 
 export default function Berlin() {

@@ -3,12 +3,17 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { getAllPosts, getPost } from "@/lib/berlin"
+import PhotoGrid from "@/components/photo-grid"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const post = getPost(slug)
   if (!post) return {}
-  return { title: `${post.title} — Mason Kimball` }
+  const title = `${post.title} — Mason Kimball`
+  return {
+    title,
+    openGraph: { title, description: "Berlin summer journal — Mason Kimball" },
+  }
 }
 
 export function generateStaticParams() {
@@ -60,16 +65,7 @@ export default async function BerlinPost({ params }: { params: Promise<{ slug: s
         {post.photos.length > 0 && (
           <section className="space-y-4">
             <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Photos</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-border">
-              {post.photos.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt=""
-                  className="w-full aspect-square object-cover bg-muted"
-                />
-              ))}
-            </div>
+            <PhotoGrid photos={post.photos} />
           </section>
         )}
 

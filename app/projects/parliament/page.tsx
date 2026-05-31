@@ -366,8 +366,8 @@ function HomeActionGrid({ onNavigate }: { onNavigate: (page: MockupPage) => void
   return (
     // 2 columns on mobile, 3 on large — prevents a single tall list on phones
     <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-      {/* Vote — static */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3 sm:p-4">
+      {/* Vote — navigates */}
+      <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3 sm:p-4 ${navCard}`} onClick={() => onNavigate('vote')}>
         <div className="flex items-start justify-between mb-2 gap-1">
           <h3 className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">Vote</h3>
           <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -375,6 +375,7 @@ function HomeActionGrid({ onNavigate }: { onNavigate: (page: MockupPage) => void
           </svg>
         </div>
         <p className="text-gray-500 dark:text-gray-400 text-xs leading-snug">Cast votes on active legislation</p>
+        <p className="text-sm text-blue-500 dark:text-blue-400 mt-1.5 font-medium">View →</p>
       </div>
 
       {/* Committees — navigates */}
@@ -435,8 +436,8 @@ function HomeActionGrid({ onNavigate }: { onNavigate: (page: MockupPage) => void
         <p className="text-sm text-blue-500 dark:text-blue-400 mt-1.5 font-medium">View →</p>
       </div>
 
-      {/* Excuses — static */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3 sm:p-4">
+      {/* Excuses — navigates */}
+      <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3 sm:p-4 ${navCard}`} onClick={() => onNavigate('excuses')}>
         <div className="flex items-start justify-between mb-2 gap-1">
           <h3 className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">My Excuses</h3>
           <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -444,6 +445,7 @@ function HomeActionGrid({ onNavigate }: { onNavigate: (page: MockupPage) => void
           </svg>
         </div>
         <p className="text-gray-500 dark:text-gray-400 text-xs leading-snug">View and manage event excuses</p>
+        <p className="text-sm text-blue-500 dark:text-blue-400 mt-1.5 font-medium">View →</p>
       </div>
 
       {/* Profile — navigates */}
