@@ -51,30 +51,20 @@ const BOOT_LINES = [
   "ready. type 'help' to see what's available.",
 ]
 
-interface GitHubPushEvent {
-  type: string
-  repo?: { name?: string }
-  payload?: { commits?: { sha?: string; message?: string }[] }
+interface GitHubCommit {
+  sha: string
+  commit: { message: string }
 }
 
 async function fetchGitLog(): Promise<string> {
   try {
-    const res = await fetch("https://api.github.com/users/MasonKimball05/events/public?per_page=30")
+    const res = await fetch("https://api.github.com/repos/MasonKimball05/portfolio/commits?per_page=8")
     if (!res.ok) return "git: could not reach GitHub (rate limited or offline)"
-    const events: GitHubPushEvent[] = await res.json()
-    const commits: string[] = []
-    for (const ev of events) {
-      if (ev.type !== "PushEvent") continue
-      const repo = ev.repo?.name?.split("/")?.[1] ?? "?"
-      for (const c of ev.payload?.commits ?? []) {
-        const sha = (c.sha ?? "").slice(0, 7)
-        const message = (c.message ?? "").split("\n")[0]
-        commits.push(`${sha}  ${message}  (${repo})`)
-        if (commits.length >= 8) break
-      }
-      if (commits.length >= 8) break
-    }
-    return commits.length > 0 ? commits.join("\n") : "no recent public commits found"
+    const commits: GitHubCommit[] = await res.json()
+    if (!Array.isArray(commits) || commits.length === 0) return "no commits found"
+    return commits
+      .map((c) => `${c.sha.slice(0, 7)}  ${c.commit.message.split("\n")[0]}`)
+      .join("\n")
   } catch {
     return "git: network error fetching commit log"
   }
