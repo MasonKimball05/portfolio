@@ -60,7 +60,7 @@ export default function Contact() {
           {LINKS.map(({ label, value, href, description, external }) => (
             <div
               key={label}
-              className="border border-border px-4 sm:px-6 py-4 flex items-center justify-between gap-4 group"
+              className="border border-border px-4 sm:px-6 py-4 flex items-center justify-between gap-4 group transition-colors hover:bg-muted hover:shadow-[inset_2px_0_0_0_var(--color-primary)]"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3 flex-wrap">

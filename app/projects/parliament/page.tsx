@@ -1063,7 +1063,7 @@ export default function ParliamentShowcase() {
           </div>
         </section>
 
-        <section className="space-y-3 border-l-4 border-l-blue-500 pl-5">
+        <section className="space-y-3 border-l-4 border-l-primary pl-5">
           <p className="text-sm text-muted-foreground leading-relaxed">
             Parliament is a full-stack web application I built from scratch to manage chapter operations
             for the Alpha Mu chapter of Beta Theta Pi. It replaced a scattered mix of spreadsheets,
@@ -1099,6 +1099,79 @@ export default function ParliamentShowcase() {
             <Accordion title="Officer Portal" badge="officers only">
               <OfficerPortalContent />
             </Accordion>
+          </div>
+        </section>
+
+        {/* Under the hood */}
+        <section className="space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-xs uppercase tracking-widest text-muted-foreground">
+              Under the Hood
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              What's actually running in production, not just the UI.
+            </p>
+          </div>
+
+          {/* Scale */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border">
+            {[
+              { value: "146k+", label: "lines of Python" },
+              { value: "345", label: "templates" },
+              { value: "500+", label: "commits, solo" },
+              { value: "~9 mo", label: "in production" },
+            ].map((s) => (
+              <div key={s.label} className="bg-background px-4 py-4 text-center space-y-1">
+                <p className="text-lg font-semibold">{s.value}</p>
+                <p className="text-xs text-muted-foreground">{s.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Security & access control */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium">Security & access control</h3>
+            <ul className="space-y-2">
+              {[
+                "WebAuthn passkeys alongside policy-driven TOTP 2FA — the org can require it for admins only, officers and admins, everyone, or set per-user overrides, with a signed “remember this device” cookie",
+                "Progressive rate limiting on login, password reset, and passkey auth, scoped by both IP and username with escalating lockouts, persisted for admin visibility",
+                "Middleware that scans every request for injection and XSS patterns, auto-quarantining accounts and blacklisting IPs after repeated attempts — logged, not silent",
+                "Geo-restriction: a session that logs in from outside the US is flagged and blocked from bulk data exports (member directories, audit logs, service-hour CSVs), matched by resolved URL name so a moved route stays covered",
+                "Per-request CSP nonces with no unsafe-inline scripts, and explicit no-store cache headers on every dynamic response so a CDN or a phone's back/forward cache can never replay one member's session to someone else",
+                "An admin “impersonate user” tool with a single documented allowlist of what it bypasses (account setup screens) versus what it never does (quarantine, lockdown, maintenance mode) — enforced by a test that fails the build if any code reads around it",
+              ].map((item) => (
+                <li key={item} className="text-sm text-muted-foreground leading-relaxed flex gap-2.5">
+                  <span className="flex-shrink-0 select-none">—</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* War stories */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium">Bugs worth remembering</h3>
+            <div className="border border-border divide-y divide-border">
+              {[
+                {
+                  title: "The “remember this device” cookie never worked for pledges",
+                  body: "It compared user IDs as integers, but a pledge's ID looks like P-C7JKZY, not a number — the comparison threw and silently fell back to asking for a TOTP code. It failed closed, so no one was ever at risk; it just took months to notice every new member was being asked twice on every login for no visible reason.",
+                },
+                {
+                  title: "Random CSRF failures traced to a phone's own cache",
+                  body: "Django doesn't set cache headers on ordinary responses by default, so a CDN — or a phone's back/forward cache — could hand one member's login page, CSRF token included, back to a different session. Fixed by forcing Cache-Control: no-store on every dynamic response, not just error pages.",
+                },
+                {
+                  title: "A committee page reporting “1 member” for every committee",
+                  body: "Filtering a queryset before annotating a Count() on that same relation makes the aggregate run over the join the filter already narrowed, not the full relation — distinct=True doesn't help, since it guards against multiplied rows, not a narrowed join. The fix was ordering: annotate before filter.",
+                },
+              ].map((story) => (
+                <div key={story.title} className="px-4 sm:px-6 py-4 space-y-1.5">
+                  <p className="text-sm font-medium">{story.title}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{story.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

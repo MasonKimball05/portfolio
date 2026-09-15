@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
 import { Button } from "@/components/ui/button"
+import { SectionLabel } from "@/components/section-label"
 
 export const metadata: Metadata = {
   title: "About — Mason Kimball",
@@ -30,8 +31,8 @@ export default function About() {
 
         {/* Education */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Education</h2>
-          <div className="border border-border border-l-4 border-l-blue-500 divide-y divide-border">
+          <SectionLabel>Education</SectionLabel>
+          <div className="border border-border rounded-md border-l-4 border-l-primary divide-y divide-border overflow-hidden">
             <div className="px-4 py-4 space-y-1">
               <p className="text-sm font-medium">Samford University</p>
               <p className="text-xs text-muted-foreground">B.S. Computer Science · Cyber Security concentration · German minor</p>
@@ -45,11 +46,11 @@ export default function About() {
 
         {/* Currently */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Currently</h2>
+          <SectionLabel>Currently</SectionLabel>
           <div className="border border-border divide-y divide-border">
             {[
               { label: "EVP", detail: "Executive Vice President, Beta Theta Pi Alpha Mu Chapter", color: "text-amber-500" },
-              { label: "Parliament", detail: "Building chapter admin software — Django + PostgreSQL", color: "text-blue-500" },
+              { label: "Parliament", detail: "Building chapter admin software — Django + PostgreSQL", color: "text-primary" },
               { label: "German", detail: "Working toward B2 fluency", color: "text-green-500" },
             ].map(({ label, detail, color }) => (
               <div key={label} className="px-4 py-3 flex gap-3 sm:gap-6">
@@ -62,12 +63,12 @@ export default function About() {
 
         {/* Certifications */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Certifications</h2>
+          <SectionLabel>Certifications</SectionLabel>
           <a
             href="https://www.credly.com/badges/272c81a8-8efa-4cbe-94b3-ba5e033d8ba3/public_url"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between border border-border px-4 py-3 hover:bg-muted transition-colors group"
+            className="flex items-center justify-between border border-border rounded-md px-4 py-3 transition-colors group hover:bg-muted hover:shadow-[inset_2px_0_0_0_var(--color-primary)]"
           >
             <div className="flex items-center gap-3">
               <ShieldCheck size={28} className="text-green-500 flex-shrink-0" />
@@ -82,7 +83,7 @@ export default function About() {
 
         {/* Outside of code */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Outside of code</h2>
+          <SectionLabel>Outside of code</SectionLabel>
           <p className="text-muted-foreground leading-relaxed max-w-xl">
             From Dallas, TX. Oldest of four brothers. My family has deep German roots, which is part
             of what pushed me toward German. When I'm not at a computer programming I'm usually jogging,

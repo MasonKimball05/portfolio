@@ -11,7 +11,7 @@ import Script from "next/script"
 const SKILLS = [
   {
     category: "Languages",
-    dot: "bg-blue-500",
+    dot: "bg-primary",
     items: ["Python", "C", "SQL", "TypeScript", "Swift"],
   },
   {
@@ -42,15 +42,17 @@ export default function Skills() {
         <section className="space-y-10">
           {SKILLS.map(({ category, dot, items }) => (
             <div key={category} className="space-y-3">
-              <h2 className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-                <span className={`w-2 h-2 flex-shrink-0 ${dot}`} />
-                {category}
+              <h2 className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest">
+                <span className="text-primary">[</span>
+                <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
+                <span className="text-muted-foreground">{category}</span>
+                <span className="text-primary">]</span>
               </h2>
               <div className="flex flex-wrap gap-2">
                 {items.map((skill) => (
                   <span
                     key={skill}
-                    className="text-sm border border-border px-3 py-1.5 text-muted-foreground"
+                    className="text-sm border border-border rounded-md px-3 py-1.5 text-muted-foreground"
                   >
                     {skill}
                   </span>
@@ -62,15 +64,17 @@ export default function Skills() {
 
         {/* Certifications */}
         <section className="space-y-4">
-          <h2 className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-            <span className="w-2 h-2 flex-shrink-0 bg-green-500" />
-            Certifications
+          <h2 className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest">
+            <span className="text-primary">[</span>
+            <span className="w-2 h-2 rounded-full flex-shrink-0 bg-green-500" />
+            <span className="text-muted-foreground">Certifications</span>
+            <span className="text-primary">]</span>
           </h2>
           <a
             href="https://www.credly.com/badges/272c81a8-8efa-4cbe-94b3-ba5e033d8ba3/public_url"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between border border-border px-4 py-3 hover:bg-muted transition-colors group"
+            className="flex items-center justify-between border border-border rounded-md px-4 py-3 transition-colors group hover:bg-muted hover:shadow-[inset_2px_0_0_0_var(--color-primary)]"
           >
             <div className="flex items-center gap-3">
               <ShieldCheck size={28} className="text-green-500 flex-shrink-0" />

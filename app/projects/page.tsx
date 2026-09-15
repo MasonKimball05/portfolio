@@ -62,11 +62,12 @@ async function getRepos(): Promise<RepoWithLanguages[]> {
 import Link from "next/link"
 import { LANG_COLORS } from "@/lib/lang-colors"
 import { LangDot } from "@/components/lang-dot"
+import { SectionLabel } from "@/components/section-label"
 
 const STATUS_STYLES: Record<string, string> = {
-  "Active": "text-green-500 border-green-500/40",
-  "In Progress": "text-amber-500 border-amber-500/40",
-  "Archived": "text-muted-foreground border-border",
+  "Active": "text-green-700 dark:text-green-300 bg-green-500/10 border-green-500/30",
+  "In Progress": "text-amber-700 dark:text-amber-300 bg-amber-500/10 border-amber-500/30",
+  "Archived": "text-muted-foreground bg-muted border-border",
 }
 
 const FEATURED = [
@@ -81,7 +82,7 @@ const FEATURED = [
     tech: ["Python", "Django", "PostgreSQL", "Tailwind CSS", "Alpine.js"],
     href: "/projects/parliament",
     status: "Active",
-    accent: "border-l-blue-500",
+    accent: "border-l-primary",
     internal: true,
   },
   {
@@ -124,7 +125,7 @@ export default async function Projects() {
 
         {/* Featured */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Featured</h2>
+          <SectionLabel>Featured</SectionLabel>
           <div className="space-y-4">
             {FEATURED.map((project) => (
               <FeaturedCard key={project.name} {...project} />
@@ -134,7 +135,7 @@ export default async function Projects() {
 
         {/* All from GitHub */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">All Projects</h2>
+          <SectionLabel>All Projects</SectionLabel>
           {otherRepos.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border">
               {otherRepos.map((repo) => (
@@ -172,7 +173,7 @@ function FeaturedCard({
   internal?: boolean
 }) {
   const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES["Archived"]
-  const className = `block border border-border border-l-4 ${accent} px-6 py-5 hover:bg-muted hover:shadow-sm transition-all group space-y-4`
+  const className = `block border border-border rounded-lg border-l-4 ${accent} px-6 py-5 hover:bg-muted hover:shadow-md hover:shadow-primary/5 transition-all group space-y-4`
 
   const content = (
     <>
@@ -181,7 +182,7 @@ function FeaturedCard({
           <p className="text-sm font-medium group-hover:underline">{name}</p>
           <p className="text-xs text-muted-foreground mt-0.5">{tagline}</p>
         </div>
-        <span className={`text-xs border px-2 py-0.5 flex-shrink-0 ${statusStyle}`}>
+        <span className={`text-xs border px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${statusStyle}`}>
           {status}
         </span>
       </div>
@@ -195,7 +196,7 @@ function FeaturedCard({
       </ul>
       <div className="flex flex-wrap gap-1.5">
         {tech.map((t) => (
-          <span key={t} className="flex items-center gap-1.5 text-xs border border-border px-2 py-0.5 text-muted-foreground">
+          <span key={t} className="flex items-center gap-1.5 text-xs border border-border rounded-md px-2 py-0.5 text-muted-foreground">
             <span className={`w-1.5 h-1.5 flex-shrink-0 ${LANG_COLORS[t] ?? "bg-slate-500"}`} />
             {t}
           </span>
@@ -226,7 +227,7 @@ function RepoCard({ name, description, languages, html_url, pushed_at, stargazer
       href={html_url}
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-background flex flex-col gap-3 px-4 py-4 hover:bg-muted transition-colors group min-h-[100px]"
+      className="bg-background flex flex-col gap-3 px-4 py-4 transition-colors group min-h-[100px] hover:bg-muted hover:shadow-[inset_2px_0_0_0_var(--color-primary)]"
     >
       <p className="text-sm font-medium group-hover:underline">{name}</p>
       {description && (

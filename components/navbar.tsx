@@ -25,11 +25,13 @@ export function Navbar() {
           {pathname !== "/" ? (
               <span className="text-sm font-medium">
                 <Link href="/" className="hover:text-foreground transition-colors">
-                  mason kimball
+                  mason kimball<span className="text-primary cursor-blink">_</span>
                 </Link>
               </span>
           ):
-              <span className="text-sm font-medium">mason kimball</span>
+              <span className="text-sm font-medium">
+                mason kimball<span className="text-primary cursor-blink">_</span>
+              </span>
           }
 
         <div className="flex items-center gap-3 sm:gap-6 text-sm">
@@ -44,7 +46,7 @@ export function Navbar() {
               href={href}
               className={[
                 pathname === href
-                  ? "text-blue-500"
+                  ? "text-primary"
                   : "text-muted-foreground hover:text-foreground transition-colors",
                 hideOnMobile ? "hidden sm:inline" : "",
               ].join(" ")}

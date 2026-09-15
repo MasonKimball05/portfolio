@@ -5,9 +5,11 @@ export const metadata: Metadata = {
   title: "Mason Kimball",
   description: "CS student at Samford University. I build web apps, sometimes for my fraternity chapter.",
 }
-import { ThemeToggle } from "@/components/theme-toggle"
 import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
 import { LangDot } from "@/components/lang-dot"
+import { TerminalWindow } from "@/components/terminal-window"
+import { SectionLabel } from "@/components/section-label"
+import { TypedText } from "@/components/typed-text"
 import Link from "next/link"
 
 interface GitHubRepo {
@@ -72,34 +74,47 @@ export default async function Home() {
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 space-y-14 sm:space-y-24">
 
         {/* Hero */}
-        <section className="space-y-4">
-          <p className="text-sm text-muted-foreground">hi, i'm</p>
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Mason Kimball</h1>
-          <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-            CS student at Samford University, concentrating in Cyber Security, with a minor in German.
-            I like to build things — mostly web apps, sometimes for my fraternity chapter.
-          </p>
-          <div className="flex flex-wrap gap-3 pt-2">
-            <Button asChild>
-              <a href="https://github.com/MasonKimball05" target="_blank" rel="noopener noreferrer">
-                GitHub
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/about">About me</Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/contact">Contact</Link>
-            </Button>
-          </div>
+        <section className="relative">
+          <div
+            aria-hidden
+            className="absolute -top-20 left-1/2 -translate-x-1/2 w-[32rem] h-[20rem] rounded-full bg-primary/20 blur-3xl pointer-events-none"
+          />
+          <TerminalWindow title="visitor@masonkimball:~">
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                <span className="text-primary">$</span> <TypedText text="whoami" />
+              </p>
+              <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
+                <TypedText text="Mason Kimball" startDelay={550} speedMs={55} />
+                <span className="text-primary cursor-blink">_</span>
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+                CS student at Samford University, concentrating in Cyber Security, with a minor in German.
+                I like to build things — mostly web apps, sometimes for my fraternity chapter.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Button asChild>
+                  <a href="https://github.com/MasonKimball05" target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="/about">About me</Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="/contact">Contact</Link>
+                </Button>
+              </div>
+            </div>
+          </TerminalWindow>
         </section>
 
         {/* Projects */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Recent Projects</h2>
+          <SectionLabel>Recent Projects</SectionLabel>
           {repos.length > 0 ? (
             <div className="border border-border divide-y divide-border">
               {repos.map((repo) => (
@@ -122,14 +137,14 @@ export default async function Home() {
 
         {/* Skills */}
         <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Skills</h2>
+          <SectionLabel>Skills</SectionLabel>
 
           {/* Certification */}
           <a
             href="https://www.credly.com/badges/272c81a8-8efa-4cbe-94b3-ba5e033d8ba3/public_url"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between border border-border px-4 py-3 hover:bg-muted transition-colors group"
+            className="flex items-center justify-between border border-border rounded-md px-4 py-3 transition-colors group hover:bg-muted hover:shadow-[inset_2px_0_0_0_var(--color-primary)]"
           >
             <div className="flex items-center gap-3">
               <ShieldCheck size={28} className="text-green-500 flex-shrink-0" />
@@ -144,7 +159,7 @@ export default async function Home() {
           {/* Skills */}
           <div className="flex flex-wrap gap-2">
             {["Python", "Django", "PostgreSQL", "C", "SQL", "Git", "TypeScript", "Next.js", "Swift", "PyQt5", "Cyber Security"].map((skill) => (
-              <span key={skill} className="text-xs border border-border px-2 py-1 text-muted-foreground">
+              <span key={skill} className="text-xs border border-border rounded-md px-2 py-1 text-muted-foreground">
                 {skill}
               </span>
             ))}
@@ -177,7 +192,7 @@ function ProjectRow({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-start justify-between gap-3 sm:gap-6 px-4 py-4 hover:bg-muted transition-colors group"
+      className="flex items-start justify-between gap-3 sm:gap-6 px-4 py-4 transition-colors group hover:bg-muted hover:shadow-[inset_2px_0_0_0_var(--color-primary)]"
     >
       <div className="space-y-1 min-w-0">
         <p className="text-sm font-medium group-hover:underline">{name}</p>

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { TerminalPopup } from "@/components/terminal-popup";
 
 const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'});
 
@@ -56,6 +57,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <TerminalPopup />
         </ThemeProvider>
       </body>
     </html>
