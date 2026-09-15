@@ -155,17 +155,6 @@ export default async function Home() {
           </Link>
         </section>
 
-        {/* Berlin */}
-        <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-muted-foreground">Berlin — Summer 2026</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            Spending the summer at the Freie Universität in Berlin for language immersion. I'll be posting photos and notes here along the way.
-          </p>
-          <Link href="/berlin" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            view journal →
-          </Link>
-        </section>
-
       </main>
 
     </div>

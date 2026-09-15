@@ -50,7 +50,7 @@ export default function About() {
             {[
               { label: "EVP", detail: "Executive Vice President, Beta Theta Pi Alpha Mu Chapter", color: "text-amber-500" },
               { label: "Parliament", detail: "Building chapter admin software — Django + PostgreSQL", color: "text-blue-500" },
-              { label: "German", detail: "Working toward B2, heading to Berlin for immersion this summer", color: "text-green-500" },
+              { label: "German", detail: "Working toward B2 fluency", color: "text-green-500" },
             ].map(({ label, detail, color }) => (
               <div key={label} className="px-4 py-3 flex gap-3 sm:gap-6">
                 <span className={`text-xs w-20 flex-shrink-0 pt-0.5 font-medium ${color}`}>{label}</span>
@@ -87,14 +87,6 @@ export default function About() {
             From Dallas, TX. Oldest of four brothers. My family has deep German roots, which is part
             of what pushed me toward German. When I'm not at a computer programming I'm usually jogging,
             playing video games games, or finding something to do with friends.
-          </p>
-          <p className="text-muted-foreground leading-relaxed max-w-xl">
-            This summer I'll be at the Freie Universität Berlin for language immersion. I'll be
-            posting photos and notes from the trip in the{" "}
-            <a href="/berlin" className="text-foreground underline underline-offset-4">
-              journal
-            </a>
-            .
           </p>
         </section>
 

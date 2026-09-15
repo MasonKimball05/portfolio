@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { getAllPosts } from "@/lib/berlin"
+import { getAllPosts } from "./berlin-lib"
 
 export const metadata: Metadata = {
   title: "Berlin — Mason Kimball",

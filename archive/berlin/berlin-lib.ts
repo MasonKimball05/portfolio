@@ -2,7 +2,7 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 
-const BERLIN_DIR = path.join(process.cwd(), "content/berlin")
+const BERLIN_DIR = path.join(process.cwd(), "archive/berlin/content")
 
 export interface PostMeta {
   slug: string

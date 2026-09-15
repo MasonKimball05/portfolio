@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { MDXRemote } from "next-mdx-remote/rsc"
-import { getAllPosts, getPost } from "@/lib/berlin"
-import PhotoGrid from "@/components/photo-grid"
+import { getAllPosts, getPost } from "./berlin-lib"
+import PhotoGrid from "./photo-grid"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params

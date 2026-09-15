@@ -90,7 +90,6 @@ const FEATURED = [
     highlights: [
       "Static Next.js 14 site deployed to GitHub Pages via static export",
       "Dynamic GitHub repo fetching with per-repo language breakdowns via the GitHub API",
-      "Markdown-based journal system for the Berlin trip this summer",
     ],
     tech: ["TypeScript", "Next.js", "Tailwind CSS", "shadcn/ui"],
     href: "https://github.com/MasonKimball05/portfolio",

@@ -5,13 +5,13 @@ backend:
   base_url: https://portfolio-oauth.masonkimball.workers.dev
   site_domain: masonkimball.dev
 
-media_folder: public/images/berlin
-public_folder: /images/berlin
+media_folder: archive/berlin/images
+public_folder: /archive/berlin/images
 
 collections:
   - name: berlin
     label: Berlin Journal
-    folder: content/berlin
+    folder: archive/berlin/content
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:

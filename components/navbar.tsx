@@ -12,7 +12,6 @@ const links = [
   { href: "/about",    label: "about",    hideOnMobile: false },
   { href: "/projects", label: "projects", hideOnMobile: false },
   { href: "/skills",   label: "skills",   hideOnMobile: false },
-  { href: "/berlin",   label: "berlin",   hideOnMobile: true  },
   { href: "/contact",  label: "contact",  hideOnMobile: true  },
 ]
 

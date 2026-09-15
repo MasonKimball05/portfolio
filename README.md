@@ -1,13 +1,12 @@
 # Portfolio
 
-Personal portfolio site and Berlin summer journal. Built with Next.js, shadcn/ui, and deployed to GitHub Pages.
+Personal portfolio site. Built with Next.js, shadcn/ui, and deployed to GitHub Pages.
 
 ## Stack
 
 - **Next.js 14** — framework
 - **shadcn/ui** — component library
 - **Tailwind CSS** — styling
-- **gray-matter + next-mdx-remote** — markdown parsing for Berlin journal posts
 - **GitHub Pages** — hosting
 
 ## Dev
@@ -34,11 +33,10 @@ app/
 ├── page.tsx          # Home
 ├── about/            # About page
 ├── projects/         # Projects page
-└── berlin/           # Photo journal
-    └── [slug]/       # Individual journal posts
+└── skills/           # Skills page
 components/
-content/
-└── berlin/           # Markdown files for journal posts
 public/
 └── images/           # Static images
+archive/
+└── berlin/           # Unlinked — old Berlin journal (gray-matter/MDX practice), not built into the site
 ```
