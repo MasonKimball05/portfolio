@@ -109,6 +109,19 @@ const FEATURED = [
     status: "In Progress",
     accent: "border-l-amber-500",
   },
+  {
+    name: "Semapi",
+    tagline: "Coursework — learning the Next.js + Supabase + Vercel stack (COSC 490)",
+    highlights: [
+      "Full-stack Next.js app with Supabase for auth and the database, deployed on Vercel",
+      "Built specifically to learn that stack and deployment pipeline for a CS course",
+      "Early stage — current scope is the framework and pipeline, not a fixed feature set yet",
+    ],
+    tech: ["TypeScript", "Next.js", "Supabase", "Tailwind CSS"],
+    href: "https://semapi-delta.vercel.app",
+    status: "In Progress",
+    accent: "border-l-teal-500",
+  },
 ]
 
 const FEATURED_NAMES = new Set(FEATURED.map((p) => p.name.toLowerCase()))

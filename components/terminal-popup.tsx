@@ -26,21 +26,22 @@ const ROUTES: Record<string, string> = {
 
 const LS_OUTPUT = "about/  contact/  projects/  projects/parliament  skills/"
 
-const HELP_TEXT = [
-  "available commands:",
-  "  ls              list pages you can visit",
-  "  cd <page>       go to a page (e.g. cd about, cd projects/parliament)",
-  "  cd ..           go up one level",
-  "  pwd             print the current page path",
-  "  whoami          about the person who built this",
-  "  cat <file>      read a file (try: cat resume.pdf, cat about.md)",
-  "  git log         recent commits from github.com/MasonKimball05",
-  "  theme [mode]    set the theme (light, dark, system) — no arg toggles",
-  "  clear           clear the terminal",
-  "  help            show this message",
-  "",
-  "tip: press ` (backtick) to toggle this terminal, ↑/↓ to recall commands",
-].join("\n")
+// Rendered as one row per command (name, then indented description on its
+// own line) instead of space-padded columns — fixed-width alignment breaks
+// the moment a description wraps in this narrow popup, and a wrapped
+// continuation like "cd projects/parliament)" reads as a brand-new command.
+const HELP_ROWS: [string, string][] = [
+  ["ls", "list pages you can visit"],
+  ["cd <page>", "go to a page (e.g. cd about, cd projects/parliament)"],
+  ["cd ..", "go up one level"],
+  ["pwd", "print the current page path"],
+  ["whoami", "about the person who built this"],
+  ["cat <file>", "read a file (try: cat resume.pdf, cat about.md)"],
+  ["git log", "recent commits from github.com/MasonKimball05"],
+  ["theme [mode]", "set the theme (light, dark, system) — no arg toggles"],
+  ["clear", "clear the terminal"],
+  ["help", "show this message"],
+]
 
 const BOOT_LINES = [
   "booting portfolio-terminal v1.0.0...",
@@ -205,7 +206,12 @@ export function TerminalPopup() {
 
       switch (name.toLowerCase()) {
         case "help":
-          lines.push({ type: "output", text: HELP_TEXT })
+          lines.push({ type: "output", text: "available commands:" })
+          for (const [cmdName, desc] of HELP_ROWS) {
+            lines.push({ type: "output", text: `› ${cmdName}` })
+            lines.push({ type: "output", text: `    ${desc}` })
+          }
+          lines.push({ type: "output", text: "tip: press ` (backtick) to toggle, ↑/↓ to recall commands" })
           break
         case "ls":
           lines.push({ type: "output", text: LS_OUTPUT })
