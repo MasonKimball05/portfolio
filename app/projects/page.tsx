@@ -86,6 +86,19 @@ const FEATURED = [
     internal: true,
   },
   {
+    name: "Media Player",
+    tagline: "A native macOS video/audio player, built because QuickTime wasn't cutting it",
+    highlights: [
+      "Dual playback engines — AVFoundation for native formats, libmpv for MKV/WebM/AVI and anything AVFoundation can't open — behind custom YouTube-style transport controls",
+      "Built-in downloader (yt-dlp) with format/subtitle picks and background progress, plus on-device subtitle translation via Apple's Translation framework",
+      "Per-file resume positions, saved and exportable (M3U) playlists, trackpad gestures, remappable shortcuts, and Now Playing/AirPlay integration",
+    ],
+    tech: ["Swift", "SwiftUI", "AVFoundation", "libmpv"],
+    href: "https://github.com/MasonKimball05/Custom-Mac-Media-Player",
+    status: "Active",
+    accent: "border-l-rose-500",
+  },
+  {
     name: "Portfolio",
     tagline: "This site",
     highlights: [
