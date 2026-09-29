@@ -12,22 +12,45 @@ const SKILLS = [
   {
     category: "Languages",
     dot: "bg-primary",
-    items: ["Python", "C", "SQL", "TypeScript", "Swift"],
+    items: ["Python", "TypeScript", "JavaScript", "Java", "C#", "Go", "Rust", "Swift", "C", "SQL"],
   },
   {
     category: "Frameworks & Libraries",
     dot: "bg-violet-500",
-    items: ["Django", "Next.js", "PyQt5", "Tailwind CSS"],
+    items: [
+      "Django",
+      "Flask",
+      "Next.js",
+      "React",
+      "React Native (Expo)",
+      ".NET / Blazor",
+      "Entity Framework Core",
+      "SwiftUI",
+      "Tauri",
+      "Tailwind CSS",
+      "PyQt5",
+    ],
   },
   {
     category: "Tools & Infrastructure",
     dot: "bg-slate-400",
-    items: ["PostgreSQL", "Git", "Linux", "GitHub Actions"],
+    items: ["PostgreSQL", "SQLite", "Supabase", "Docker", "Git", "GitHub Actions", "Cloudflare", "Linux"],
   },
   {
     category: "Areas",
     dot: "bg-green-500",
-    items: ["Cyber Security", "Web Application Security", "Relational Database Design", "REST APIs"],
+    items: [
+      "Cyber Security",
+      "Web Application Security",
+      "Relational Database Design",
+      "REST APIs",
+      "LLM Integration (Claude API)",
+    ],
+  },
+  {
+    category: "Practices",
+    dot: "bg-amber-500",
+    items: ["Agile / Scrum", "Automated Testing", "CI/CD", "Code Review"],
   },
 ]
 
