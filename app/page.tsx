@@ -9,6 +9,7 @@ import { ShieldCheck } from "@phosphor-icons/react/dist/ssr"
 import { LangDot } from "@/components/lang-dot"
 import { TerminalWindow } from "@/components/terminal-window"
 import { SectionLabel } from "@/components/section-label"
+import { LiveStatus, STATUS_GIST_ID } from "@/components/live-status"
 import { TypedText } from "@/components/typed-text"
 import Link from "next/link"
 
@@ -135,6 +136,9 @@ export default async function Home() {
           </Link>
         </section>
 
+        {/* Live status */}
+        <LiveStatusSection />
+
         {/* Skills */}
         <section className="space-y-4">
           <SectionLabel>Skills</SectionLabel>
@@ -206,5 +210,16 @@ function ProjectRow({
         </div>
       )}
     </a>
+  )
+}
+
+// Hidden entirely until the status gist is configured.
+function LiveStatusSection() {
+  if (!STATUS_GIST_ID) return null
+  return (
+    <section className="space-y-4">
+      <SectionLabel>Live Status</SectionLabel>
+      <LiveStatus />
+    </section>
   )
 }
