@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import {
-  CaseStudyHeader, CaseStudyShell, DashList, Intro, P, Screenshot, SectionHeading, Stats, Stories,
+  CaseStudyHeader, CaseStudyShell, DashList, Intro, P, SectionHeading, Stats, Stories,
 } from "@/components/case-study"
+import { ScreenshotTabs } from "@/components/screenshot-tabs"
 
 const DESCRIPTION =
   "An AI-assisted job application tracker built with C#, .NET, Blazor and the Claude API — with a background radar that finds and scores new postings."
@@ -39,20 +40,34 @@ export default function JobTrackerCaseStudy() {
 
       <section className="space-y-4">
         <SectionHeading title="The App" subtitle="Screenshots use fictional companies and a made-up résumé." />
-        <Screenshot
-          src={`${IMG}/board.jpg`}
-          darkSrc={`${IMG}/board-dark.jpg`}
-          width={1600}
-          height={875}
-          alt="The board: Saved, Applied, Interviewing and Offer columns with match scores, a follow-up reminder, and filters"
-          caption="The pipeline board, with match scores, follow-up reminders, and filters that live in the URL."
-        />
-        <Screenshot
-          src={`${IMG}/detail.jpg`}
-          width={1200}
-          height={1170}
-          alt="An application's detail page: a résumé match analysis with strengths, gaps and suggestions, and a streamed cover letter"
-          caption="One application: the résumé match analysis, and a cover letter drafted live as Claude writes it."
+        <ScreenshotTabs
+          tabs={[
+            {
+              label: "Board",
+              src: `${IMG}/board.jpg`,
+              darkSrc: `${IMG}/board-dark.jpg`,
+              width: 1600,
+              height: 875,
+              alt: "The board: Saved, Applied, Interviewing and Offer columns with match scores, a follow-up reminder, and filters",
+              caption: "The pipeline board, with match scores, follow-up reminders, and response-rate stats.",
+            },
+            {
+              label: "Filters",
+              src: `${IMG}/board-filtered.jpg`,
+              width: 1600,
+              height: 600,
+              alt: "The board filtered to in-person jobs and sorted by best match",
+              caption: "Filtered to in-person roles, best match first. Filters live in the URL, so a view like \"remote jobs, best match first\" can be bookmarked.",
+            },
+            {
+              label: "Application detail",
+              src: `${IMG}/detail.jpg`,
+              width: 1200,
+              height: 1170,
+              alt: "An application's detail page: a résumé match analysis with strengths, gaps and suggestions, and a streamed cover letter",
+              caption: "One application: the résumé match analysis, and a cover letter drafted live as Claude writes it.",
+            },
+          ]}
         />
       </section>
 
@@ -64,7 +79,7 @@ export default function JobTrackerCaseStudy() {
             { value: "2,382 → 49", label: "postings filtered before any AI cost" },
             { value: "~2¢", label: "to extract and score a posting" },
             { value: "50%", label: "off scoring via batching" },
-            { value: "42", label: "automated tests" },
+            { value: "70", label: "automated tests" },
           ]}
         />
 

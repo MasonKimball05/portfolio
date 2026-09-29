@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import {
-  CaseStudyHeader, CaseStudyShell, DashList, Intro, P, Screenshot, SectionHeading, Stats, Stories, Terminal,
+  CaseStudyHeader, CaseStudyShell, DashList, Intro, P, SectionHeading, Stats, Stories, Terminal,
 } from "@/components/case-study"
 import { LiveStatus, STATUS_GIST_ID } from "@/components/live-status"
+import { ScreenshotTabs } from "@/components/screenshot-tabs"
 
 const DESCRIPTION =
   "Uptime and security monitoring for my deployed sites, written in Go with only the standard library."
@@ -59,13 +60,31 @@ export default function SentinelCaseStudy() {
 
       <section className="space-y-4">
         <SectionHeading title="In Action" />
-        <Screenshot
-          src={`${IMG}/dashboard-light.jpg`}
-          darkSrc={`${IMG}/dashboard-dark.jpg`}
-          width={1060}
-          height={490}
-          alt="Sentinel's dashboard: Parliament and the portfolio, every check passing"
-          caption="The local dashboard (sentinel -serve), re-checking every five minutes."
+        <ScreenshotTabs
+          tabs={[
+            {
+              label: "All clear",
+              src: `${IMG}/dashboard-light.jpg`,
+              darkSrc: `${IMG}/dashboard-dark.jpg`,
+              width: 1060,
+              height: 490,
+              alt: "Sentinel's dashboard: Parliament and the portfolio, every check passing",
+              caption: "The local dashboard (sentinel -serve), re-checking every five minutes.",
+            },
+            {
+              label: "Catching problems",
+              src: `${IMG}/problems.jpg`,
+              darkSrc: `${IMG}/problems-dark.jpg`,
+              width: 1600,
+              height: 780,
+              alt: "Sentinel flagging a deliberately misconfigured demo site: no HTTPS, five missing security headers, a leaked server version, and a publicly readable .env file",
+              caption: "Next to my two real sites, a deliberately misconfigured demo site, the kind of staging server that ends up public by accident. Sentinel catches all of it.",
+              points: [
+                "No HTTPS, five missing security headers, and a Server header that leaks the exact software version",
+                "A publicly readable .env file. Sentinel checks the content, not just the status code, so an HTML \"not found\" page or a redirect to a login screen doesn't count as a leak",
+              ],
+            },
+          ]}
         />
         <Terminal>{CLI}</Terminal>
       </section>
