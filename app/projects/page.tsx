@@ -81,6 +81,7 @@ const FEATURED = [
     ],
     tech: ["Python", "Django", "PostgreSQL", "Tailwind CSS", "Alpine.js"],
     href: "/projects/parliament",
+    repo: "Parliament-New",
     status: "Active",
     accent: "border-l-primary",
     internal: true,
@@ -95,8 +96,51 @@ const FEATURED = [
     ],
     tech: ["Swift", "SwiftUI", "AVFoundation", "libmpv"],
     href: "https://github.com/MasonKimball05/Custom-Mac-Media-Player",
+    repo: "Custom-Mac-Media-Player",
     status: "Active",
     accent: "border-l-rose-500",
+  },
+  {
+    name: "Job Tracker",
+    tagline: "AI-assisted job application tracker, built with C# and Claude",
+    highlights: [
+      "Paste a job posting and Claude extracts company, role, location, and requirements via structured outputs — salary only if stated, never guessed",
+      "Scores your résumé against a posting (0–100, with real strengths and gaps) and drafts editable, streaming cover letters that don't invent experience",
+      "Blazor + EF Core/SQLite, all data local — postings and your résumé leave your machine only when you trigger an AI feature",
+    ],
+    tech: ["C#", ".NET", "Blazor", "SQLite"],
+    href: "https://github.com/MasonKimball05/job-tracker",
+    repo: "job-tracker",
+    status: "Active",
+    accent: "border-l-indigo-500",
+  },
+  {
+    name: "Repo Radar",
+    tagline: "Desktop dashboard for git hygiene across every repo in a folder",
+    highlights: [
+      "Surfaces uncommitted changes, unpushed/behind commits, stashes, duplicate clones, and live GitHub Actions status at a glance",
+      "Tauri 2 desktop app — Rust backend, React/TypeScript UI — read-only by design: never fetches, runs git via argument arrays (no shell), keeps tokens out of the UI",
+      "Auto-rescans on window focus, with filters for what actually needs attention",
+    ],
+    tech: ["Rust", "Tauri", "TypeScript", "React"],
+    href: "https://github.com/MasonKimball05/repo-radar",
+    repo: "repo-radar",
+    status: "Active",
+    accent: "border-l-cyan-500",
+  },
+  {
+    name: "Sentinel",
+    tagline: "Uptime and security monitoring for my deployed sites, in Go",
+    highlights: [
+      "Checks reachability, TLS expiry, security headers (HSTS, CSP, clickjacking protection), version-leaking headers, and exposed files like .env or .git/HEAD",
+      "Alerts only on change — a push notification via ntfy or Discord when a site goes down or recovers, not a repeat every run",
+      "Runs on a 30-minute GitHub Actions schedule so it keeps checking from outside even while my laptop's asleep — standard library only, no dependencies",
+    ],
+    tech: ["Go", "GitHub Actions"],
+    href: "https://github.com/MasonKimball05/go-sentinel",
+    repo: "go-sentinel",
+    status: "Active",
+    accent: "border-l-emerald-500",
   },
   {
     name: "Portfolio",
@@ -107,6 +151,7 @@ const FEATURED = [
     ],
     tech: ["TypeScript", "Next.js", "Tailwind CSS", "shadcn/ui"],
     href: "https://github.com/MasonKimball05/portfolio",
+    repo: "portfolio",
     status: "Active",
     accent: "border-l-violet-500",
   },
@@ -119,6 +164,7 @@ const FEATURED = [
     ],
     tech: ["Python", "PyQt5", "QtWebEngine"],
     href: "https://github.com/MasonKimball05/PythonBrowser",
+    repo: "PythonBrowser",
     status: "In Progress",
     accent: "border-l-amber-500",
   },
@@ -132,16 +178,17 @@ const FEATURED = [
     ],
     tech: ["TypeScript", "Next.js", "Supabase", "Tailwind CSS"],
     href: "https://semapi-delta.vercel.app",
+    repo: "semapi",
     status: "In Progress",
     accent: "border-l-teal-500",
   },
 ]
 
-const FEATURED_NAMES = new Set(FEATURED.map((p) => p.name.toLowerCase()))
+const FEATURED_REPOS = new Set(FEATURED.map((p) => p.repo.toLowerCase()))
 
 export default async function Projects() {
   const repos = await getRepos()
-  const otherRepos = repos.filter((r) => !FEATURED_NAMES.has(r.name.toLowerCase()))
+  const otherRepos = repos.filter((r) => !FEATURED_REPOS.has(r.name.toLowerCase()))
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
