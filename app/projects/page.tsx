@@ -146,6 +146,20 @@ const FEATURED = [
     internal: true,
   },
   {
+    name: "pq-census",
+    tagline: "Measuring how much of the web uses post-quantum TLS",
+    highlights: [
+      "Scanned the Tranco top 10,000: 55.7% of reachable sites negotiate X25519MLKEM768, the hybrid ML-KEM key exchange that Chrome and Firefox now offer",
+      "The CDN decides it: 97% of sites behind Cloudflare and 99.6% behind CloudFront are post-quantum, versus about 20% of self-hosted sites; 15% are still on TLS 1.2",
+      "Keeps the handshake even when HTTP fails, classifies every failure (DNS, reset, timeout), skips private addresses, and resumes interrupted scans — data and methodology published",
+    ],
+    tech: ["Go", "TLS", "Cryptography"],
+    href: "https://github.com/MasonKimball05/pq-census",
+    repo: "pq-census",
+    status: "Active",
+    accent: "border-l-sky-500",
+  },
+  {
     name: "homebase",
     tagline: "Process supervisor and dashboard for the apps I self-host",
     highlights: [
@@ -161,10 +175,24 @@ const FEATURED = [
     internal: true,
   },
   {
+    name: "shelf",
+    tagline: "Streams my desktop's media library to my Media Player, from anywhere",
+    highlights: [
+      "Browse, search, and play movies and shows over Tailscale, with seeking and subtitles through HTTP Range requests — files play as they are, no transcoding",
+      "Files are served by opaque ID only, so a request path never touches the disk and traversal is impossible by construction; stream links are HMAC-signed and expire",
+      "Bearer-token API, a Tailscale-only firewall rule, and secrets kept in the environment — supervised and redeployed by homebase",
+    ],
+    tech: ["Go", "Tailscale", "Swift"],
+    href: "https://github.com/MasonKimball05/shelf",
+    repo: "shelf",
+    status: "Active",
+    accent: "border-l-fuchsia-500",
+  },
+  {
     name: "Portfolio",
     tagline: "This site",
     highlights: [
-      "Static Next.js 14 site deployed to GitHub Pages via static export",
+      "Static Next.js 16 site deployed to GitHub Pages via static export",
       "Dynamic GitHub repo fetching with per-repo language breakdowns via the GitHub API",
     ],
     tech: ["TypeScript", "Next.js", "Tailwind CSS", "shadcn/ui"],

@@ -6,7 +6,7 @@ const ROUTES = ["", "/about", "/projects", "/projects/parliament", "/projects/jo
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map((route) => ({
-    url: `https://masonkimball.dev${route}`,
+    url: `https://masonkimball.dev${route}/`,
     lastModified: new Date(),
   }))
 }

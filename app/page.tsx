@@ -162,7 +162,7 @@ export default async function Home() {
 
           {/* Skills */}
           <div className="flex flex-wrap gap-2">
-            {["Python", "Django", "PostgreSQL", "C", "SQL", "Git", "TypeScript", "Next.js", "Swift", "PyQt5", "Cyber Security"].map((skill) => (
+            {["Python", "Django", "Go", "TypeScript", "Next.js", "Swift", "C#", "Rust", "PostgreSQL", "SQL", "C", "Git", "Cyber Security"].map((skill) => (
               <span key={skill} className="text-xs border border-border rounded-md px-2 py-1 text-muted-foreground">
                 {skill}
               </span>

@@ -4,14 +4,17 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 
 // Live status of my deployed sites, published by Sentinel
-// (/projects/sentinel) to a public gist every 30 minutes.
+// (/projects/sentinel) to a public gist. The workflow is scheduled every 30
+// minutes, but GitHub runs free scheduled jobs best-effort: in practice every
+// 1-6 hours.
 //
 // Read through api.github.com rather than the raw gist URL because the
 // site's Content-Security-Policy already allows that origin.
 export const STATUS_GIST_ID = "dff5a80f15e319618626658a1280a671"
 
-/** Past this age the data is shown as stale: scheduled runs have stopped or fallen behind. */
-const STALE_AFTER_MS = 2 * 60 * 60 * 1000
+/** Past this age the data is shown as stale: the scheduled runs have stopped,
+ * not just been delayed (gaps of up to ~6 hours are normal). */
+const STALE_AFTER_MS = 8 * 60 * 60 * 1000
 
 const DISPLAY_NAMES: Record<string, string> = {
   parliament: "Parliament",

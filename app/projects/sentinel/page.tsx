@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 }
 
 const IMG = "/images/projects/sentinel"
+const CHECKUP_URL = "https://checkup-1016486506373.us-central1.run.app"
 
 const CLI = `$ sentinel
    SITE        CHECK          DETAIL
@@ -36,7 +37,10 @@ export default function SentinelCaseStudy() {
         title="Sentinel"
         tagline="Uptime and security monitoring for my deployed sites"
         tech={["Go", "GitHub Actions", "ntfy"]}
-        links={[{ label: "GitHub", href: "https://github.com/MasonKimball05/go-sentinel", primary: true }]}
+        links={[
+          { label: "GitHub", href: "https://github.com/MasonKimball05/go-sentinel", primary: true },
+          { label: "Check your site", href: CHECKUP_URL },
+        ]}
       />
 
       <Intro accent="border-l-emerald-500">
@@ -55,10 +59,30 @@ export default function SentinelCaseStudy() {
 
       {STATUS_GIST_ID && (
         <section className="space-y-4">
-          <SectionHeading title="Live Right Now" subtitle="Published by Sentinel's scheduled run; refreshes every 30 minutes." />
+          <SectionHeading title="Live Right Now" subtitle="Published by Sentinel's scheduled run on GitHub Actions, every few hours." />
           <LiveStatus showLink={false} />
         </section>
       )}
+
+      <section className="space-y-4">
+        <SectionHeading title="Check Your Own Site" />
+        <P>
+          A public version of Sentinel&rsquo;s checks runs on Google Cloud Run. Enter any domain and it grades the site
+          A&ndash;F on HTTPS, certificate health, post-quantum key exchange, security headers, and version-leaking headers,
+          with a tip for each fix.{" "}
+          <a href={CHECKUP_URL} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4">
+            Try it &rarr;
+          </a>
+        </P>
+        <DashList
+          title="Safe to leave open to the internet"
+          items={[
+            "Passive only: it reads what the site sends to any visitor, and never probes someone else's server for files like .env",
+            "SSRF-proof: every connection is checked at connect time, so a domain that resolves to a private, loopback, or cloud-metadata address is refused, even after a redirect or a DNS change",
+            "Rate limited per visitor and overall, with a 10-minute cache and a single instance, so it can't be used to flood a site or run up a bill",
+          ]}
+        />
+      </section>
 
       <section className="space-y-4">
         <SectionHeading title="In Action" />
