@@ -39,7 +39,7 @@ export default function JobTrackerCaseStudy() {
       </Intro>
 
       <section className="space-y-4">
-        <SectionHeading title="The App" subtitle="Screenshots use fictional companies and a made-up résumé." />
+        <SectionHeading title="The App" subtitle="Screenshots use a made-up résumé. The board uses fictional companies; Radar shows real public postings." />
         <ScreenshotTabs
           tabs={[
             {
@@ -66,6 +66,19 @@ export default function JobTrackerCaseStudy() {
               height: 1170,
               alt: "An application's detail page: a résumé match analysis with strengths, gaps and suggestions, and a streamed cover letter",
               caption: "One application: the résumé match analysis, and a cover letter drafted live as Claude writes it.",
+            },
+            {
+              label: "Job Radar",
+              src: `${IMG}/radar.jpg`,
+              darkSrc: `${IMG}/radar-dark.jpg`,
+              width: 1600,
+              height: 1020,
+              alt: "Job Radar's matches: a new-grad software engineer role scored 85% and an associate SOC analyst role scored 72%, each with a verdict and reasons",
+              caption: "Job Radar watches 22 companies' job boards. A free keyword and experience-level filter runs first, and only the postings that pass go to Claude, scored together in one batch at half price.",
+              points: [
+                "Each match comes with a one-line verdict and the reasons behind it, including the gaps",
+                "Save to board turns a posting into a tracked application with the score and posting text attached",
+              ],
             },
           ]}
         />

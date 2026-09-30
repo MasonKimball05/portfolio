@@ -20,10 +20,12 @@ const CLI = `$ sentinel
    SITE        CHECK          DETAIL
 ✓  parliament  status         200 in 251ms
 ✓  parliament  tls            expires in 45 days (2026-11-14)
+✓  parliament  pq-tls         post-quantum key exchange (X25519MLKEM768)
 ✓  parliament  headers        all security headers present
 ✓  parliament  exposed-files  1 sensitive path(s) not exposed
 ✓  portfolio   status         200 in 167ms
 ✓  portfolio   tls            expires in 89 days (2026-12-28)
+✓  portfolio   pq-tls         post-quantum key exchange (X25519MLKEM768)
 ✓  portfolio   headers        all security headers present
 ✓  portfolio   exposed-files  4 sensitive path(s) not exposed`
 
@@ -41,7 +43,7 @@ export default function SentinelCaseStudy() {
         <P>
           Sentinel watches my deployed sites from the outside — Parliament and this portfolio — and pings my
           phone when something changes. It checks that each site is up and fast, that its TLS certificate isn’t
-          about to expire, that it sends the security headers browsers rely on, and that files like{" "}
+          about to expire, whether its TLS handshake is post-quantum, that it sends the security headers browsers rely on, and that files like{" "}
           <code className="text-foreground">.env</code> or <code className="text-foreground">.git/HEAD</code>{" "}
           aren’t publicly readable.
         </P>
@@ -95,7 +97,7 @@ export default function SentinelCaseStudy() {
         <Stats
           items={[
             { value: "0", label: "third-party dependencies" },
-            { value: "5", label: "checks per site" },
+            { value: "6", label: "checks per site" },
             { value: "30 min", label: "schedule on GitHub Actions" },
             { value: "27", label: "automated tests" },
           ]}
@@ -105,6 +107,7 @@ export default function SentinelCaseStudy() {
           title="How it works"
           items={[
             "Each site is checked in its own goroutine; the homepage is fetched once and every check reads that single response, TLS certificate included",
+            "The post-quantum check reads which key exchange the handshake negotiated. Go's TLS client offers the hybrid X25519MLKEM768 (classical X25519 plus NIST's ML-KEM) by default, so if the server picks it, traffic recorded today stays safe from a future quantum computer",
             "Alerts fire on change, not on every run: a small state file remembers each check's last status, so a day-long outage is one alert, not 48 — plus one when it recovers",
             "If a notification fails to send, the change is rolled back and retried on the next run; state is written atomically so a crash can't corrupt it",
             "On GitHub Actions, the state file is carried between runs in the Actions cache, so the checks come from outside my network even while my laptop sleeps",

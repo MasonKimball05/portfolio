@@ -24,6 +24,7 @@ interface SiteStatus {
   up: boolean
   response_ms?: number
   tls_days_left?: number
+  post_quantum?: boolean
 }
 
 interface Summary {
@@ -100,6 +101,7 @@ export function LiveStatus({ showLink = true }: { showLink?: boolean }) {
                   {[
                     s.up && s.response_ms != null ? `${s.response_ms} ms` : null,
                     s.tls_days_left != null ? `cert ${s.tls_days_left}d` : null,
+                    s.post_quantum ? "PQ TLS" : null,
                   ]
                     .filter(Boolean)
                     .join(" · ")}
