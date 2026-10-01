@@ -4,7 +4,7 @@ import {
 } from "@/components/case-study"
 
 const DESCRIPTION =
-  "A Go scanner that measured how many of the 10,000 most popular websites negotiate a post-quantum TLS key exchange."
+  "A Go scanner that measured how many of the 10,000 most popular websites negotiate a post-quantum TLS key exchange, and a follow-up study of why the rest don't."
 
 export const metadata: Metadata = {
   title: "pq-census — Mason Kimball",
@@ -71,7 +71,8 @@ export default function PqCensusCaseStudy() {
         tech={["Go", "TLS", "Cryptography"]}
         links={[
           { label: "GitHub", href: REPO, primary: true },
-          { label: "Data & report", href: `${REPO}/tree/main/data/2026-09-30` },
+          { label: "Census data", href: `${REPO}/tree/main/data/2026-09-30` },
+          { label: "Follow-up study", href: `${REPO}/tree/main/data/2026-10-01-probe` },
         ]}
       />
 
@@ -85,7 +86,9 @@ export default function PqCensusCaseStudy() {
         </P>
         <P>
           So I measured it. pq-census connects to the 10,000 most popular sites on the Tranco list and records the
-          key exchange each one picks, along with the TLS version and who serves the site.
+          key exchange each one picks, along with the TLS version and who serves the site. Then a follow-up study
+          asked why the sites that chose classical encryption did: can&rsquo;t they use post-quantum, or won&rsquo;t
+          they?
         </P>
       </Intro>
 
@@ -118,6 +121,42 @@ export default function PqCensusCaseStudy() {
       </section>
 
       <section className="space-y-6">
+        <SectionHeading title="Can't, or Won't?" subtitle="A follow-up on the sites that chose classical" />
+        <P>
+          My hypothesis was that many classical sites already supported post-quantum and were simply set to prefer
+          the older option, since the major TLS libraries have been adding it. To test it, I reconnected to the 2,119
+          sites that chose a classical key exchange over TLS 1.3, offering <em>only</em>{" "}
+          <code className="text-foreground">X25519MLKEM768</code>. A server that supports it can still connect. One
+          that doesn&rsquo;t shares no option with the client and, under the TLS 1.3 standard (RFC 8446), has to
+          refuse with a <code className="text-foreground">handshake_failure</code> alert.
+        </P>
+        <Stats
+          items={[
+            { value: "2,119", label: "classical sites probed" },
+            { value: "1,773", label: "gave a clear answer" },
+            { value: "99.9%", label: "of those can't do post-quantum" },
+            { value: "2", label: "had it and chose classical" },
+          ]}
+        />
+        <P>
+          The hypothesis was wrong, and not by a little. When a site doesn&rsquo;t use post-quantum, it&rsquo;s
+          almost never a setting: the server doesn&rsquo;t support it. And 88% of those sites are self-hosted, the
+          same group the census found lagging. Fixing it means upgrading TLS libraries, web servers or load
+          balancers, some tied to an operating system or a vendor&rsquo;s hardware, and testing it all before
+          production. For many teams that&rsquo;s a project with real cost, so it may be a while, and meanwhile their
+          traffic can still be recorded.
+        </P>
+        <DashList
+          items={[
+            "1,771 of 1,773 conclusive sites (99.9%) refused the post-quantum-only handshake with handshake_failure; only purdue.edu and roche.com support it but chose classical",
+            "Every result was checked against a second, independent TLS implementation: OpenSSL agreed on a random 40 of 40 refusals and both exceptions",
+            "18 sites had switched post-quantum on within a day of the census, and 4 answered differently an hour apart: one name can front servers at different upgrade levels",
+            "Two sites accept Go's post-quantum-only handshake but reject OpenSSL's, though both offer the same single option, so something in front of them treats clients differently",
+          ]}
+        />
+      </section>
+
+      <section className="space-y-6">
         <SectionHeading title="How It Works" />
         <DashList
           items={[
@@ -140,6 +179,10 @@ export default function PqCensusCaseStudy() {
               body: "Running it from my desktop, Defender's machine-learning detection quarantined the binary (Bearfoos.A!ml) about 30 seconds in: a new, unsigned program opening hundreds of connections a minute looks like malware. A false positive, but a real-world lesson about what network measurement tools look like to endpoint security.",
             },
             {
+              title: "A second opinion caught a mistake",
+              body: "The follow-up's first pass counted any TLS alert as \"no support\". Re-checking a sample with OpenSSL showed some of those servers failing for an unrelated reason, and showed sites flipping between post-quantum and classical. So only the alerts the TLS standard requires for \"no common option\" count now, and sites that look newly post-quantum get four more connections to rule out a mixed fleet.",
+            },
+            {
               title: "A bug in my own measurement",
               body: "The first version only recorded a site if its HTTP request succeeded, so a site that negotiated post-quantum TLS but then returned an HTTP/2 error was thrown away. Capturing the handshake on its own fixed it, and a test now covers that case.",
             },
@@ -154,8 +197,17 @@ export default function PqCensusCaseStudy() {
             "One vantage point (a US residential connection) at one moment. Large sites can answer differently by region or load balancer",
             "It measures what servers support, not what share of real traffic is post-quantum",
             "Provider detection relies on response headers, so sites that strip them are counted as self-hosted",
+            "A single connection measures one server, not a whole site: a few sites gave different answers an hour apart. 328 follow-up results were inconclusive and are left out of the percentages",
           ]}
         />
+      </section>
+
+      <section className="space-y-4">
+        <SectionHeading title="What's Next" />
+        <P>
+          Post-quantum cryptography is what I want to study in grad school, and this raised my next question:
+          what&rsquo;s actually blocking these upgrades, and what&rsquo;s the cheapest path through them?
+        </P>
       </section>
     </CaseStudyShell>
   )
