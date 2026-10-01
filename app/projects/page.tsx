@@ -154,10 +154,11 @@ const FEATURED = [
       "Keeps the handshake even when HTTP fails, classifies every failure (DNS, reset, timeout), skips private addresses, and resumes interrupted scans — data and methodology published",
     ],
     tech: ["Go", "TLS", "Cryptography"],
-    href: "https://github.com/MasonKimball05/pq-census",
+    href: "/projects/pq-census",
     repo: "pq-census",
     status: "Active",
     accent: "border-l-sky-500",
+    internal: true,
   },
   {
     name: "homebase",
