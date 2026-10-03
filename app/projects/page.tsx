@@ -199,10 +199,11 @@ const FEATURED = [
       "Slide-and-sprint movement, rebindable controls, and a Three.js browser prototype kept on the side as a lab for tuning numbers fast",
     ],
     tech: ["GDScript", "Godot", "Three.js"],
-    href: "https://github.com/MasonKimball05/Skirmish",
+    href: "/projects/skirmish",
     repo: "Skirmish",
     status: "In Development",
     accent: "border-l-orange-500",
+    internal: true,
   },
   {
     name: "Portfolio",
