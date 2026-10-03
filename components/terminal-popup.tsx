@@ -6,7 +6,12 @@ import { useRouter, usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { TerminalTitleBar } from "@/components/terminal-window"
 
-type OutputLine = { type: "output" | "error"; text: string }
+// "art" lines keep their exact spacing and never wrap — the popup is ~45
+// columns wide, and a wrapped ASCII drawing is just noise.
+// "cmd"/"desc" are for help: a command name, then its description with a CSS
+// hanging indent — leading spaces only indent the first line, so a wrapped
+// description used to restart at the left edge, right where command names sit.
+type OutputLine = { type: "output" | "error" | "art" | "cmd" | "desc"; text: string }
 // `command: null` marks a system block (e.g. the boot sequence) that isn't a
 // response to anything the visitor typed, so it renders without a "$" line.
 type Entry = { id: number; command: string | null; lines: OutputLine[] }
@@ -25,6 +30,7 @@ const ROUTES: Record<string, string> = {
 }
 
 const LS_OUTPUT = "about/  contact/  projects/  projects/parliament  skills/"
+const LS_ALL_OUTPUT = ".  ..  .env  .git/  about/  contact/  projects/  skills/  about.md  resume.pdf"
 
 // Rendered as one row per command (name, then indented description on its
 // own line) instead of space-padded columns — fixed-width alignment breaks
@@ -42,6 +48,132 @@ const HELP_ROWS: [string, string][] = [
   ["clear", "clear the terminal"],
   ["help", "show this message"],
 ]
+
+const FUN_COMMANDS = "neofetch  fortune  cowsay  tree  ping  nmap  history  date  uptime  echo  coffee  exit"
+
+const FORTUNES = [
+  "There are only two hard things in computer science: cache invalidation, naming things, and off-by-one errors.",
+  "It works on my machine. — every developer, eventually",
+  "Weeks of coding can save you hours of planning.",
+  "There is no cloud. It's just someone else's computer.",
+  "The S in IoT stands for security.",
+  "A user interface is like a joke. If you have to explain it, it's not that good.",
+  "Premature optimization is the root of all evil. — Donald Knuth",
+  "Always code as if the person who ends up maintaining your code will be the future you, at 2am.",
+  "git commit -m \"final fix\" && git commit -m \"actual final fix\"",
+  "Security is a process, not a product. — Bruce Schneier",
+  "Have you tried turning it off and on again?",
+  "99 little bugs in the code. Take one down, patch it around... 127 little bugs in the code.",
+]
+
+const TREE_OUTPUT = [
+  "~",
+  "├── about/",
+  "├── contact/",
+  "├── projects/",
+  "│   └── parliament/",
+  "├── skills/",
+  "├── about.md",
+  "└── resume.pdf",
+  "",
+  "5 directories, 2 files",
+].join("\n")
+
+const NEOFETCH_LOGO = [
+  " __  __ _  __",
+  "|  \\/  | |/ /",
+  "| |\\/| | ' / ",
+  "| |  | | . \\ ",
+  "|_|  |_|_|\\_\\",
+].join("\n")
+
+const COFFEE_ART = [
+  "    ( (",
+  "     ) )",
+  "  ........",
+  "  |      |]",
+  "  \\      /",
+  "   `----'",
+].join("\n")
+
+const TRAIN_ART = [
+  "    (@@) (  ) (@)",
+  "   ====      ________",
+  " _D _|  |___/        \\__",
+  "  |(_)---  |  H\\____/  |",
+  "  /     |  |  H  |  |  |",
+  " | _____|__|__H__|__|__|",
+  "  oo  oo      oo    oo",
+].join("\n")
+
+const NMAP_OUTPUT = [
+  "Starting Nmap 7.95 ( https://nmap.org )",
+  "Nmap scan report for masonkimball.dev",
+  "Host is up (0.0042s latency).",
+  "",
+  "PORT      STATE     SERVICE",
+  "22/tcp    filtered  ssh (nice try)",
+  "80/tcp    open      http",
+  "443/tcp   open      https",
+  "1337/tcp  open      elite (you found it)",
+  "",
+  "Nmap done: 1 IP address scanned. Attack surface: a static site.",
+  "It's a pile of HTML — there's nothing back here to break into.",
+].join("\n")
+
+function cowsay(text: string): string {
+  const max = 28
+  const lines: string[] = []
+  let current = ""
+  for (const raw of text.split(/\s+/).filter(Boolean)) {
+    const word = raw.slice(0, max)
+    if (current && (current + " " + word).length > max) {
+      lines.push(current)
+      current = word
+    } else {
+      current = current ? `${current} ${word}` : word
+    }
+  }
+  if (current) lines.push(current)
+
+  const width = Math.max(...lines.map((l) => l.length))
+  const body =
+    lines.length === 1
+      ? [`< ${lines[0]} >`]
+      : lines.map((l, i) => {
+          const [left, right] = i === 0 ? ["/", "\\"] : i === lines.length - 1 ? ["\\", "/"] : ["|", "|"]
+          return `${left} ${l.padEnd(width)} ${right}`
+        })
+
+  return [
+    " " + "_".repeat(width + 2),
+    ...body,
+    " " + "-".repeat(width + 2),
+    "        \\   ^__^",
+    "         \\  (oo)\\_______",
+    "            (__)\\       )\\/\\",
+    "                ||----w |",
+    "                ||     ||",
+  ].join("\n")
+}
+
+function fakePing(host: string): string {
+  const times = [0, 1, 2].map(() => (Math.random() * 18 + 4).toFixed(3))
+  return [
+    `PING ${host} (127.0.0.1): 56 data bytes`,
+    ...times.map((t, i) => `64 bytes from 127.0.0.1: icmp_seq=${i} ttl=64 time=${t} ms`),
+    "",
+    `--- ${host} ping statistics ---`,
+    "3 packets transmitted, 3 packets received, 0.0% packet loss",
+  ].join("\n")
+}
+
+function formatUptime(ms: number): string {
+  const totalSeconds = Math.floor(ms / 1000)
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+  return minutes > 0 ? `${minutes} min, ${seconds} sec` : `${seconds} sec`
+}
 
 const BOOT_LINES = [
   "booting portfolio-terminal v1.0.0...",
@@ -107,6 +239,7 @@ export function TerminalPopup() {
   const [historyIndex, setHistoryIndex] = useState<number | null>(null)
   const hydrated = useRef(false)
   const nextId = useRef(0)
+  const startedAt = useRef(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
@@ -122,6 +255,7 @@ export function TerminalPopup() {
     setOpen(state.open)
     setBooted(state.booted)
     nextId.current = state.entries.reduce((max, e) => Math.max(max, e.id), -1) + 1
+    startedAt.current = Date.now()
     hydrated.current = true
   }, [])
 
@@ -189,7 +323,6 @@ export function TerminalPopup() {
       cancelled = true
       timers.forEach(clearTimeout)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, booted])
 
   const run = useCallback(
@@ -208,13 +341,18 @@ export function TerminalPopup() {
         case "help":
           lines.push({ type: "output", text: "available commands:" })
           for (const [cmdName, desc] of HELP_ROWS) {
-            lines.push({ type: "output", text: `› ${cmdName}` })
-            lines.push({ type: "output", text: `    ${desc}` })
+            lines.push({ type: "cmd", text: cmdName })
+            lines.push({ type: "desc", text: desc })
           }
+          lines.push({ type: "output", text: "" })
+          lines.push({ type: "output", text: "just for fun:" })
+          lines.push({ type: "desc", text: FUN_COMMANDS })
+          lines.push({ type: "desc", text: "(and a few hidden ones — poke around)" })
+          lines.push({ type: "output", text: "" })
           lines.push({ type: "output", text: "tip: press ` (backtick) to toggle, ↑/↓ to recall commands" })
           break
         case "ls":
-          lines.push({ type: "output", text: LS_OUTPUT })
+          lines.push({ type: "output", text: /^-\w*a/.test(arg) ? LS_ALL_OUTPUT : LS_OUTPUT })
           break
         case "pwd":
           lines.push({ type: "output", text: pathname })
@@ -258,12 +396,124 @@ export function TerminalPopup() {
             })
             break
           }
+          if (file === ".env") {
+            lines.push({ type: "error", text: "cat: .env: Permission denied" })
+            lines.push({ type: "output", text: "good instinct checking, though — Sentinel flags any site that serves one publicly." })
+            break
+          }
+          if (file.startsWith(".git")) {
+            lines.push({ type: "error", text: `cat: ${arg}: Is a directory (and not one you're getting into)` })
+            break
+          }
+          if (file === "/etc/passwd" || file.includes("..")) {
+            lines.push({ type: "error", text: `cat: ${arg}: this is a browser tab, not a server. path traversal won't get you far here.` })
+            break
+          }
           lines.push({ type: "error", text: `cat: ${arg || "(no file)"}: No such file or directory` })
           break
         }
         case "sudo":
+          if (/make me a sandwich/i.test(arg)) {
+            lines.push({ type: "output", text: "okay." })
+            lines.push({ type: "art", text: "   _________\n  /  ~~~~~  \\\n |___________|\n |  lettuce  |\n |___________|\n  \\_________/" })
+            break
+          }
           lines.push({ type: "error", text: "guest is not in the sudoers file. this incident will be reported." })
           break
+        case "neofetch": {
+          const theme = resolvedTheme ?? "system"
+          lines.push({ type: "art", text: NEOFETCH_LOGO })
+          lines.push({
+            type: "output",
+            text: [
+              "guest@masonkimball",
+              "------------------",
+              "OS:     Portfolio OS (static export)",
+              "Host:   Samford University",
+              "Kernel: Next.js 16 / React 19",
+              "Shell:  portfolio-terminal 1.0",
+              `Theme:  ${theme}`,
+              "Langs:  Python, TS, Swift, Rust, Go, C#",
+              "Focus:  Cyber Security",
+              `Uptime: ${formatUptime(Date.now() - startedAt.current)}`,
+            ].join("\n"),
+          })
+          break
+        }
+        case "fortune":
+          lines.push({ type: "output", text: FORTUNES[Math.floor(Math.random() * FORTUNES.length)] })
+          break
+        case "cowsay":
+          lines.push({ type: "art", text: cowsay((arg || "moo. type 'help' for more.").slice(0, 200)) })
+          break
+        case "tree":
+          lines.push({ type: "output", text: TREE_OUTPUT })
+          break
+        case "ping":
+          if (!arg) {
+            lines.push({ type: "error", text: "usage: ping <host>" })
+            break
+          }
+          lines.push({ type: "output", text: fakePing(rest[0].slice(0, 40)) })
+          break
+        case "nmap":
+          lines.push({ type: "output", text: NMAP_OUTPUT })
+          break
+        case "history":
+          lines.push({
+            type: "output",
+            text: [...commandLog, cmd].map((c, i) => `${String(i + 1).padStart(4)}  ${c}`).join("\n"),
+          })
+          break
+        case "date":
+          lines.push({ type: "output", text: new Date().toString() })
+          break
+        case "uptime":
+          lines.push({ type: "output", text: `up ${formatUptime(Date.now() - startedAt.current)}, 1 user (you)` })
+          break
+        case "echo":
+          lines.push({ type: "output", text: arg })
+          break
+        case "coffee":
+          lines.push({ type: "art", text: COFFEE_ART })
+          lines.push({ type: "output", text: "brewing... ☕ productivity +10" })
+          break
+        case "sl":
+          lines.push({ type: "art", text: TRAIN_ART })
+          lines.push({ type: "output", text: "choo choo — you meant 'ls'." })
+          break
+        case "matrix":
+          lines.push({ type: "output", text: "Wake up, Neo...\nThe Matrix has you...\nFollow the white rabbit." })
+          break
+        case "vim":
+        case "vi":
+          lines.push({ type: "output", text: "you've entered vim. there is no escape." })
+          lines.push({ type: "output", text: "(hint: generations of developers have tried ':q')" })
+          break
+        case ":q":
+        case ":q!":
+        case ":wq":
+        case ":x":
+          lines.push({ type: "output", text: "you escaped vim. most people never do." })
+          break
+        case "emacs":
+          lines.push({ type: "output", text: "emacs: this popup is ~45 columns wide. there isn't room for a whole operating system." })
+          break
+        case "nano":
+          lines.push({ type: "output", text: "nano: a respectable choice. but this filesystem is still read-only." })
+          break
+        case "man":
+          lines.push({
+            type: "output",
+            text: arg ? `No manual entry for ${arg}. 'help' is the only manual here.` : "What manual page do you want? (try 'help')",
+          })
+          break
+        case "exit":
+        case "logout":
+          lines.push({ type: "output", text: "logout" })
+          setEntries((prev) => [...prev, { id, command: cmd, lines }])
+          setOpen(false)
+          return
         case "rm":
           lines.push({ type: "error", text: "rm: nice try — this filesystem is read-only for guests." })
           break
@@ -301,7 +551,7 @@ export function TerminalPopup() {
 
       setEntries((prev) => [...prev, { id, command: cmd, lines }])
     },
-    [pathname, router, resolvedTheme, setTheme]
+    [pathname, router, resolvedTheme, setTheme, commandLog]
   )
 
   const onSubmit = (e: FormEvent) => {
@@ -387,7 +637,13 @@ export function TerminalPopup() {
                         className={
                           line.type === "error"
                             ? "text-red-500 dark:text-red-400 whitespace-pre-wrap break-words"
-                            : "text-muted-foreground whitespace-pre-wrap break-words"
+                            : line.type === "art"
+                              ? "text-primary whitespace-pre overflow-x-auto leading-tight [font-variant-ligatures:none]"
+                              : line.type === "cmd"
+                                ? "text-primary font-medium pt-2 break-words"
+                                : line.type === "desc"
+                                  ? "text-muted-foreground pl-4 whitespace-pre-wrap break-words"
+                                  : "text-muted-foreground whitespace-pre-wrap break-words"
                         }
                       >
                         {line.text}

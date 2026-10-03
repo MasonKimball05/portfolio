@@ -67,6 +67,7 @@ import { SectionLabel } from "@/components/section-label"
 const STATUS_STYLES: Record<string, string> = {
   "Active": "text-green-700 dark:text-green-300 bg-green-500/10 border-green-500/30",
   "In Progress": "text-amber-700 dark:text-amber-300 bg-amber-500/10 border-amber-500/30",
+  "In Development": "text-sky-700 dark:text-sky-300 bg-sky-500/10 border-sky-500/30",
   "Archived": "text-muted-foreground bg-muted border-border",
 }
 
@@ -188,6 +189,20 @@ const FEATURED = [
     repo: "shelf",
     status: "Active",
     accent: "border-l-fuchsia-500",
+  },
+  {
+    name: "Skirmish",
+    tagline: "An arcade FPS in the spirit of Call of Duty / XDefiant, built to learn game development",
+    highlights: [
+      "Godot 4 game with seven guns, Create-a-Class loadouts, frag grenades, a knife, and killstreaks (UAV, armor, mortar, sentry), plus a bot to fight",
+      "Online 1v1 over a dedicated server with netcode built from scratch: client-side prediction, server reconciliation, entity interpolation, and lag-compensated hit registration",
+      "Slide-and-sprint movement, rebindable controls, and a Three.js browser prototype kept on the side as a lab for tuning numbers fast",
+    ],
+    tech: ["GDScript", "Godot", "Three.js"],
+    href: "https://github.com/MasonKimball05/Skirmish",
+    repo: "Skirmish",
+    status: "In Development",
+    accent: "border-l-orange-500",
   },
   {
     name: "Portfolio",

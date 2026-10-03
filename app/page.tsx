@@ -69,7 +69,7 @@ export default async function Home() {
   const repos = await getRepos()
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-background text-foreground overflow-x-clip">
 
       {/* Main */}
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 space-y-14 sm:space-y-24">
