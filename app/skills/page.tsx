@@ -29,12 +29,14 @@ const SKILLS = [
       "Tauri",
       "Tailwind CSS",
       "PyQt5",
+      "Google Cloud",
+      "AWS"
     ],
   },
   {
     category: "Tools & Infrastructure",
     dot: "bg-slate-400",
-    items: ["PostgreSQL", "SQLite", "Supabase", "Docker", "Git", "GitHub Actions", "Cloudflare", "Linux"],
+    items: ["PostgreSQL", "SQLite", "Supabase", "Docker", "Git", "GitHub Actions", "Cloudflare", "Linux", "Claude Code", "Ollama"],
   },
   {
     category: "Areas",
