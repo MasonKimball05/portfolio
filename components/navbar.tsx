@@ -45,7 +45,8 @@ export function Navbar() {
               key={href}
               href={href}
               className={[
-                pathname === href
+                // Pages end in "/" (trailingSlash), and a case study counts as projects.
+                pathname === href || pathname.startsWith(`${href}/`)
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground transition-colors",
                 hideOnMobile ? "hidden sm:inline" : "",

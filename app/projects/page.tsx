@@ -59,225 +59,48 @@ async function getRepos(): Promise<RepoWithLanguages[]> {
   }
 }
 
-import Link from "next/link"
-import { LANG_COLORS } from "@/lib/lang-colors"
 import { LangDot } from "@/components/lang-dot"
+import { ProjectBrowser } from "@/components/project-browser"
 import { SectionLabel } from "@/components/section-label"
+import { PROJECTS } from "@/lib/projects"
 
-const STATUS_STYLES: Record<string, string> = {
-  "Active": "text-green-700 dark:text-green-300 bg-green-500/10 border-green-500/30",
-  "In Progress": "text-amber-700 dark:text-amber-300 bg-amber-500/10 border-amber-500/30",
-  "In Development": "text-sky-700 dark:text-sky-300 bg-sky-500/10 border-sky-500/30",
-  "Archived": "text-muted-foreground bg-muted border-border",
-}
-
-const FEATURED = [
-  {
-    name: "Parliament",
-    tagline: "Chapter administration software for Beta Theta Pi",
-    highlights: [
-      "Used by ~60 active members to manage legislation, officer elections, service hours, attendance, and conduct reports",
-      "Custom security middleware: rate limiting, 2FA (TOTP), field-level encryption, geolocation, and attack detection",
-      "Built and maintained solo — currently hardening for handoff to future leadership before I graduate",
-    ],
-    tech: ["Python", "Django", "PostgreSQL", "Redis", "Tailwind CSS"],
-    href: "/projects/parliament",
-    repo: "Parliament-New",
-    status: "Active",
-    accent: "border-l-primary",
-    internal: true,
-  },
-  {
-    name: "Media Player",
-    tagline: "A native macOS video/audio player, built because QuickTime wasn't cutting it",
-    highlights: [
-      "Dual playback engines — AVFoundation for native formats, libmpv for MKV/WebM/AVI and anything AVFoundation can't open — behind custom YouTube-style transport controls",
-      "Built-in downloader (yt-dlp) with format/subtitle picks and background progress, plus on-device subtitle translation via Apple's Translation framework",
-      "Per-file resume positions, saved and exportable (M3U) playlists, trackpad gestures, remappable shortcuts, and Now Playing/AirPlay integration",
-    ],
-    tech: ["Swift", "SwiftUI", "AVFoundation", "libmpv"],
-    href: "/projects/media-player",
-    repo: "Custom-Mac-Media-Player",
-    status: "Active",
-    accent: "border-l-rose-500",
-    internal: true,
-  },
-  {
-    name: "Job Tracker",
-    tagline: "AI-assisted job application tracker, built with C# and Claude",
-    highlights: [
-      "Paste a job posting and Claude extracts company, role, location, and requirements via structured outputs — salary only if stated, never guessed",
-      "Scores your résumé against a posting (0–100, with real strengths and gaps) and drafts editable, streaming cover letters that don't invent experience",
-      "Job Radar watches 22 companies' job boards in the background, filters for free, and scores new postings with Claude through the Batch API at half price",
-    ],
-    tech: ["C#", ".NET", "Blazor", "SQLite"],
-    href: "/projects/job-tracker",
-    repo: "job-tracker",
-    status: "Active",
-    accent: "border-l-indigo-500",
-    internal: true,
-  },
-  {
-    name: "Repo Radar",
-    tagline: "Desktop dashboard for git hygiene across every repo in a folder",
-    highlights: [
-      "Surfaces uncommitted changes, unpushed/behind commits, stashes, duplicate clones, and live GitHub Actions status at a glance",
-      "Tauri 2 desktop app — Rust backend, React/TypeScript UI — read-only by design: never fetches, runs git via argument arrays (no shell), keeps tokens out of the UI",
-      "Auto-rescans on window focus, with filters for what actually needs attention",
-    ],
-    tech: ["Rust", "Tauri", "TypeScript", "React"],
-    href: "https://github.com/MasonKimball05/repo-radar",
-    repo: "repo-radar",
-    status: "Active",
-    accent: "border-l-cyan-500",
-  },
-  {
-    name: "Sentinel",
-    tagline: "Uptime and security monitoring for my deployed sites, in Go",
-    highlights: [
-      "Checks reachability, TLS expiry, security headers (HSTS, CSP, clickjacking protection), version-leaking headers, and exposed files like .env or .git/HEAD",
-      "Alerts only on change — a push notification via ntfy or Discord when a site goes down or recovers, not a repeat every run",
-      "Runs on a 30-minute GitHub Actions schedule so it keeps checking from outside even while my laptop's asleep — standard library only, no dependencies",
-    ],
-    tech: ["Go", "GitHub Actions"],
-    href: "/projects/sentinel",
-    repo: "go-sentinel",
-    status: "Active",
-    accent: "border-l-emerald-500",
-    internal: true,
-  },
-  {
-    name: "pq-census",
-    tagline: "Measuring how much of the web uses post-quantum TLS",
-    highlights: [
-      "Scanned the Tranco top 10,000: 55.7% of reachable sites negotiate X25519MLKEM768, the hybrid ML-KEM key exchange that Chrome and Firefox now offer",
-      "The CDN decides it: 97% of sites behind Cloudflare and 99.6% behind CloudFront are post-quantum, versus about 20% of self-hosted sites; 15% are still on TLS 1.2",
-      "Keeps the handshake even when HTTP fails, classifies every failure (DNS, reset, timeout), skips private addresses, and resumes interrupted scans — data and methodology published",
-    ],
-    tech: ["Go", "TLS", "Cryptography"],
-    href: "/projects/pq-census",
-    repo: "pq-census",
-    status: "Active",
-    accent: "border-l-sky-500",
-    internal: true,
-  },
-  {
-    name: "homebase",
-    tagline: "Process supervisor and dashboard for the apps I self-host",
-    highlights: [
-      "Starts every app on my desktop at boot, restarts crashes with exponential backoff, and health-checks each one — with a dashboard for live logs and start/stop/restart",
-      "Windows Job Objects tie each app's lifetime to homebase, so even a force-killed supervisor never leaves orphaned apps behind",
-      "Phone alerts via ntfy on crash loops and recoveries; one command pulls, rebuilds and redeploys any app from git",
-    ],
-    tech: ["Go", "Windows", "Tailscale"],
-    href: "/projects/homebase",
-    repo: "homebase",
-    status: "Active",
-    accent: "border-l-amber-500",
-    internal: true,
-  },
-  {
-    name: "shelf",
-    tagline: "Streams my desktop's media library to my Media Player, from anywhere",
-    highlights: [
-      "Browse, search, and play movies and shows over Tailscale, with seeking and subtitles through HTTP Range requests — files play as they are, no transcoding",
-      "Files are served by opaque ID only, so a request path never touches the disk and traversal is impossible by construction; stream links are HMAC-signed and expire",
-      "Bearer-token API, a Tailscale-only firewall rule, and secrets kept in the environment — supervised and redeployed by homebase",
-    ],
-    tech: ["Go", "Tailscale", "Swift"],
-    href: "https://github.com/MasonKimball05/shelf",
-    repo: "shelf",
-    status: "Active",
-    accent: "border-l-fuchsia-500",
-  },
-  {
-    name: "Skirmish",
-    tagline: "An arcade FPS in the spirit of Call of Duty / XDefiant, built to learn game development",
-    highlights: [
-      "Godot 4 game with ten guns, attachments, perks, seven modes (from Team Deathmatch to a round-based plant-and-defuse), and four maps",
-      "Online play over a dedicated server with netcode built from scratch: prediction, reconciliation, interpolation, lag compensation, and packet-loss recovery",
-      "Bots that navigate, flank, and call each other out as a team; guns and soldiers modelled in Blender by script, and every sound synthesized in code",
-    ],
-    tech: ["GDScript", "Godot", "Blender"],
-    href: "/projects/skirmish",
-    repo: "Skirmish",
-    status: "In Development",
-    accent: "border-l-orange-500",
-    internal: true,
-  },
-  {
-    name: "Portfolio",
-    tagline: "This site",
-    highlights: [
-      "Static Next.js 16 site deployed to GitHub Pages via static export",
-      "Dynamic GitHub repo fetching with per-repo language breakdowns via the GitHub API",
-    ],
-    tech: ["TypeScript", "Next.js", "Tailwind CSS", "shadcn/ui"],
-    href: "https://github.com/MasonKimball05/portfolio",
-    repo: "portfolio",
-    status: "Active",
-    accent: "border-l-violet-500",
-  },
-  {
-    name: "PythonBrowser",
-    tagline: "Custom browser built with PyQt5",
-    highlights: [
-      "Tabbed browsing with QtWebEngine for full web rendering",
-      "Built to explore Qt's signals/slots system and desktop GUI development in Python",
-    ],
-    tech: ["Python", "PyQt5", "QtWebEngine"],
-    href: "https://github.com/MasonKimball05/PythonBrowser",
-    repo: "PythonBrowser",
-    status: "In Progress",
-    accent: "border-l-amber-500",
-  },
-  {
-    name: "Semapi",
-    tagline: "Coursework — learning the Next.js + Supabase + Vercel stack (COSC 490)",
-    highlights: [
-      "Full-stack Next.js app with Supabase for auth and the database, deployed on Vercel",
-      "Built specifically to learn that stack and deployment pipeline for a CS course",
-      "Early stage — current scope is the framework and pipeline, not a fixed feature set yet",
-    ],
-    tech: ["TypeScript", "Next.js", "Supabase", "Tailwind CSS"],
-    href: "https://semapi-delta.vercel.app",
-    repo: "semapi",
-    status: "In Progress",
-    accent: "border-l-teal-500",
-  },
-]
-
-const FEATURED_REPOS = new Set(FEATURED.map((p) => p.repo.toLowerCase()))
+const LISTED_REPOS = new Set(PROJECTS.map((p) => p.repo.toLowerCase()))
 
 export default async function Projects() {
   const repos = await getRepos()
-  const otherRepos = repos.filter((r) => !FEATURED_REPOS.has(r.name.toLowerCase()))
+  const otherRepos = repos.filter((r) => !LISTED_REPOS.has(r.name.toLowerCase()))
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-12 sm:py-24 space-y-10 sm:space-y-16">
 
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">projects</h1>
+        <div className="space-y-2">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">projects</h1>
+          <p className="text-sm text-muted-foreground">
+            Things I&apos;ve built, most with a write-up of how they work and what was hard. Filter by what you&apos;re interested in.
+          </p>
+        </div>
 
-        {/* Featured */}
         <section className="space-y-4">
           <SectionLabel>Featured</SectionLabel>
-          <div className="space-y-4">
-            {FEATURED.map((project) => (
-              <FeaturedCard key={project.name} {...project} />
-            ))}
-          </div>
+          <ProjectBrowser projects={PROJECTS} />
         </section>
 
-        {/* All from GitHub */}
+        {/* Everything else on GitHub, folded away so the page doesn't run on. */}
         <section className="space-y-4">
-          <SectionLabel>All Projects</SectionLabel>
+          <SectionLabel>More on GitHub</SectionLabel>
           {otherRepos.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border">
-              {otherRepos.map((repo) => (
-                <RepoCard key={repo.id} {...repo} />
-              ))}
-            </div>
+            <details className="group border border-border">
+              <summary className="cursor-pointer list-none px-4 py-3 text-sm text-muted-foreground hover:bg-muted transition-colors flex items-center justify-between">
+                <span>{otherRepos.length} more repositories: coursework, experiments and older projects</span>
+                <span className="text-xs transition-transform group-open:rotate-90">▸</span>
+              </summary>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border-t border-border">
+                {otherRepos.map((repo) => (
+                  <RepoCard key={repo.id} {...repo} />
+                ))}
+              </div>
+            </details>
           ) : (
             <p className="text-sm text-muted-foreground">Could not load repositories.</p>
           )}
@@ -285,70 +108,6 @@ export default async function Projects() {
 
       </main>
     </div>
-  )
-}
-
-
-function FeaturedCard({
-  name,
-  tagline,
-  highlights,
-  tech,
-  href,
-  status,
-  accent,
-  internal,
-}: {
-  name: string
-  tagline: string
-  highlights: string[]
-  tech: string[]
-  href: string
-  status: string
-  accent: string
-  internal?: boolean
-}) {
-  const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES["Archived"]
-  const className = `block border border-border rounded-lg border-l-4 ${accent} px-6 py-5 hover:bg-muted hover:shadow-md hover:shadow-primary/5 transition-all group space-y-4`
-
-  const content = (
-    <>
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-sm font-medium group-hover:underline">{name}</p>
-          <p className="text-xs text-muted-foreground mt-0.5">{tagline}</p>
-        </div>
-        <span className={`text-xs border px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${statusStyle}`}>
-          {status}
-        </span>
-      </div>
-      <ul className="space-y-1.5">
-        {highlights.map((h) => (
-          <li key={h} className="text-sm text-muted-foreground flex gap-2.5">
-            <span className="flex-shrink-0 select-none">—</span>
-            <span>{h}</span>
-          </li>
-        ))}
-      </ul>
-      <div className="flex flex-wrap gap-1.5">
-        {tech.map((t) => (
-          <span key={t} className="flex items-center gap-1.5 text-xs border border-border rounded-md px-2 py-0.5 text-muted-foreground">
-            <span className={`w-1.5 h-1.5 flex-shrink-0 ${LANG_COLORS[t] ?? "bg-slate-500"}`} />
-            {t}
-          </span>
-        ))}
-      </div>
-    </>
-  )
-
-  if (internal) {
-    return <Link href={href} className={className}>{content}</Link>
-  }
-
-  return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
-      {content}
-    </a>
   )
 }
 

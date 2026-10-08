@@ -5,6 +5,7 @@ import type { FormEvent, KeyboardEvent } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { TerminalTitleBar } from "@/components/terminal-window"
+import { CASE_STUDIES } from "@/lib/projects"
 
 // "art" lines keep their exact spacing and never wrap — the popup is ~45
 // columns wide, and a wrapped ASCII drawing is just noise.
@@ -23,13 +24,17 @@ const ROUTES: Record<string, string> = {
   "home": "/",
   "about": "/about",
   "projects": "/projects",
-  "projects/parliament": "/projects/parliament",
-  "parliament": "/projects/parliament",
+  // Every case study, as "projects/<slug>" and plain "<slug>" (from lib/projects.ts).
+  ...Object.fromEntries(CASE_STUDIES.flatMap((p) => [
+    [`projects/${p.slug}`, `/projects/${p.slug}`],
+    [p.slug, `/projects/${p.slug}`],
+  ])),
   "skills": "/skills",
   "contact": "/contact",
 }
 
-const LS_OUTPUT = "about/  contact/  projects/  projects/parliament  skills/"
+const LS_OUTPUT = "about/  contact/  projects/  skills/"
+const LS_PROJECTS_OUTPUT = CASE_STUDIES.map((p) => `${p.slug}/`).join("  ")
 const LS_ALL_OUTPUT = ".  ..  .env  .git/  about/  contact/  projects/  skills/  about.md  resume.pdf"
 
 // Rendered as one row per command (name, then indented description on its
@@ -71,12 +76,12 @@ const TREE_OUTPUT = [
   "├── about/",
   "├── contact/",
   "├── projects/",
-  "│   └── parliament/",
+  ...CASE_STUDIES.map((p, i) => `│   ${i === CASE_STUDIES.length - 1 ? "└" : "├"}── ${p.slug}/`),
   "├── skills/",
   "├── about.md",
   "└── resume.pdf",
   "",
-  "5 directories, 2 files",
+  `${4 + CASE_STUDIES.length} directories, 2 files`,
 ].join("\n")
 
 const NEOFETCH_LOGO = [
@@ -352,7 +357,9 @@ export function TerminalPopup() {
           lines.push({ type: "output", text: "tip: press ` (backtick) to toggle, ↑/↓ to recall commands" })
           break
         case "ls":
-          lines.push({ type: "output", text: /^-\w*a/.test(arg) ? LS_ALL_OUTPUT : LS_OUTPUT })
+          // `ls projects` (or `ls` while on /projects) lists the case studies.
+          const inProjects = /^(\.\/)?projects\/?$/.test(arg) || (arg === "" && pathname.replace(/\/$/, "") === "/projects")
+          lines.push({ type: "output", text: inProjects ? LS_PROJECTS_OUTPUT : /^-\w*a/.test(arg) ? LS_ALL_OUTPUT : LS_OUTPUT })
           break
         case "pwd":
           lines.push({ type: "output", text: pathname })
@@ -369,7 +376,8 @@ export function TerminalPopup() {
         case "cd": {
           let target = arg.replace(/^\.\//, "").replace(/\/$/, "").toLowerCase()
           if (target === "..") {
-            target = pathname === "/projects/parliament" ? "projects" : ""
+            // From a case study, up is /projects; from anywhere else, home.
+            target = /^\/projects\/[^/]+/.test(pathname) ? "projects" : ""
           }
           const dest = ROUTES[target]
           if (dest !== undefined) {
