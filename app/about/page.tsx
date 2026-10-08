@@ -135,10 +135,11 @@ export default function About() {
         <section className="space-y-4">
           <SectionLabel>What&apos;s next</SectionLabel>
           <div className="border border-border rounded-md border-l-4 border-l-primary px-4 py-4 space-y-2">
-            <p className="text-sm font-medium">Looking for new-grad software engineering and security roles</p>
+            <p className="text-sm font-medium">Looking for a software engineering or security internship for Spring or Summer 2027</p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Starting after May 2027, in Birmingham, Dallas or remote. I&apos;m also applying to MS programs in
-              Computer Science and Cyber Security, with Texas A&amp;M and the University of Alabama at the top of my list.
+              After I graduate in May 2027 I&apos;m starting an MS in Computer Science or Cyber Security, with Texas
+              A&amp;M and the University of Alabama at the top of my list. Before that I&apos;d like to spend a semester
+              or a summer on a real team, in Birmingham, Dallas or remote.
             </p>
           </div>
         </section>
