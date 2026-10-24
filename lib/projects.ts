@@ -250,6 +250,7 @@ export const PROJECTS: Project[] = [
     slug: "eclipse",
     name: "Eclipse",
     categories: ["Apps", "AI"],
+    caseStudy: true,
     tagline: "My own Arc-style browser for macOS, built since Arc is being wound down",
     highlights: [
       "Arc's model carried forward: vertical sidebar, Spaces with themes, pinned tabs that auto-archive, a command bar, Split View, Peek, Easels and Live Folders, with an importer for Arc's own data",
