@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 // Newest first. `accent` colors the role line, matching the rest of the site.
 const EXPERIENCE: { when: string; role: string; place: string; accent: string; points: string[] }[] = [
   {
-    when: "Sep 2026 – now",
+    when: "Sep 2026 – Oct 2026",
     role: "Gloo Hackathon 2026",
     place: "Church Buddy, team project",
     accent: "text-sky-500",
@@ -25,7 +25,7 @@ const EXPERIENCE: { when: string; role: string; place: string; accent: string; p
     ],
   },
   {
-    when: "Sep 2025 – now",
+    when: "Aug 2026 – Dec 2026",
     role: "Scrum Master & Backend Developer",
     place: "Mobilized Food Trucks, student team",
     accent: "text-teal-500",
