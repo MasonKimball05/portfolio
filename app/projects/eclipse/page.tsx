@@ -53,7 +53,9 @@ export default function EclipseCaseStudy() {
             "File → Import from Arc brings over Spaces, pinned folders, Favorites, history and site icons from Arc's local data, read-only",
             "Arc Max's ideas without an API key: tidied tab titles, grouping tabs into folders, Ask on Page, 5-second link previews and Browse for Me, through the Claude CLI already signed in on the Mac",
             "Built-in ad blocking, cookie-banner rejection (never Accept), tracking tags removed from links, private windows, site permissions and certificate warnings",
-            "Built as a real Mac app that can be the default browser, with crash recovery and daily updates from its own GitHub branch",
+            "Whole-page screenshots stitched a screenful at a time, darkening for sites that only come in light, and macOS's share menu for the page's link without its tracking tags",
+            "Motion that follows Arc's: tabs slide in and out, Peek and Little windows rise into place, the window crossfades when macOS switches light and dark, and all of it respects Reduce Motion. VoiceOver reads every tab, folder and command-bar result",
+            "Built as a real Mac app that can be the default browser, with twelve versions of its eclipse icon drawn in code, crash recovery, and daily updates from its own GitHub branch",
           ]}
         />
       </section>
@@ -63,8 +65,8 @@ export default function EclipseCaseStudy() {
 
         <Stats
           items={[
-            { value: "~22k", label: "lines of Python" },
-            { value: "209", label: "tests, plus live window tests" },
+            { value: "~24k", label: "lines of Python" },
+            { value: "247", label: "tests, plus live window tests" },
             { value: "3", label: "runtime dependencies" },
             { value: "200k", label: "blocking rules loaded in under 1 s" },
           ]}
@@ -79,6 +81,7 @@ export default function EclipseCaseStudy() {
             "Chrome extensions run on my own runtime: content scripts, MV3 service workers as hidden pages, chrome.storage, tabs, ports, native messaging and declarativeNetRequest",
             "Blocking rules are indexed by domain and keyword on a background thread, so an ad blocker's 200,000 rules cost a fraction of a millisecond per request",
             "The searchable history of what I've read is a local SQLite FTS5 index written on its own thread, never fed by private windows or sign-in pages",
+            "Live tests drive the real window against a local test site for about a minute: swipes, Reader, private windows, certificate warnings, screenshots. Their windows stay behind mine and never take focus, so I can keep working while they run",
           ]}
         />
 
@@ -96,6 +99,10 @@ export default function EclipseCaseStudy() {
             {
               title: "Renaming without losing anything",
               body: "PythonBrowser became Halo, then Eclipse. What you see uses the new name, but the data folder, the Keychain entries and the bundle ID keep the original one. That way a rename never strands your tabs or saved tokens, and macOS still remembers it as the default browser along with its camera and microphone permissions.",
+            },
+            {
+              title: "Animations that don't stutter",
+              body: "The obvious way to open Peek is to grow its card from small to full size. But resizing a web page every frame makes Chromium lay it out again each time, and the animation stutters. Peek opens at full size and only moves into place, which reads the same and stays smooth. The same rule shaped the other animations: move and fade things, but don't resize a page while it animates.",
             },
             {
               title: "Why GitHub took 30 seconds to load",
