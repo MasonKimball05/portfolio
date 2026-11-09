@@ -2,6 +2,9 @@ import type { Metadata } from "next"
 import {
   CaseStudyHeader, CaseStudyShell, DashList, Intro, P, SectionHeading, Stats, Stories, Terminal,
 } from "@/components/case-study"
+import { ScreenshotTabs } from "@/components/screenshot-tabs"
+
+const IMG = "/images/projects/loom"
 
 const DESCRIPTION =
   "A desktop IDE in Tauri, Rust and React: real language servers, a debugger, git down to single lines, Claude Code, and a local model that works on its own while I'm away."
@@ -44,6 +47,38 @@ export default function LoomCaseStudy() {
           away.
         </P>
       </Intro>
+
+      <section className="space-y-4">
+        <SectionHeading title="In Action" />
+        <ScreenshotTabs
+          tabs={[
+            {
+              label: "Theme picker",
+              src: `${IMG}/extensions-picker.jpg`,
+              width: 1600,
+              height: 947,
+              alt: "Loom's color theme picker open over a Rust file, listing VS Code, Atom and installed themes such as Dracula and Night Owl",
+              caption: "Choosing a color theme. The arrow keys preview each one live; themes installed from Open VSX sit beside the built-in ones.",
+            },
+            {
+              label: "Extensions",
+              src: `${IMG}/extensions-dracula.jpg`,
+              width: 1600,
+              height: 947,
+              alt: "Loom's Extensions view searching Open VSX themes, with Dracula and Night Owl installed, beside a TypeScript file in the Dracula theme",
+              caption: "The Extensions view, in an installed Dracula theme. It searches Open VSX, and installing copies out only the theme's JSON: extension code is never run.",
+            },
+            {
+              label: "Night Owl",
+              src: `${IMG}/extensions-night-owl.jpg`,
+              width: 1600,
+              height: 947,
+              alt: "The Rust source that installs extensions, open in Loom with the Night Owl theme",
+              caption: "The Rust side of that, in Night Owl: downloads go through Rust rather than the web view, so the content security policy can keep the page talking only to Loom.",
+            },
+          ]}
+        />
+      </section>
 
       <section className="space-y-6">
         <SectionHeading title="What It Does" />

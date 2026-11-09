@@ -208,6 +208,11 @@ export default function PqCensusCaseStudy() {
           Post-quantum cryptography is what I want to study in grad school, and this raised my next question:
           what&rsquo;s actually blocking these upgrades, and what&rsquo;s the cheapest path through them?
         </P>
+        <P>
+          To understand the math under the handshake I&rsquo;m measuring, I&rsquo;m also implementing ML-KEM from the
+          FIPS 203 standard in plain Python, one tested stage at a time, and breaking scaled-down versions of it with
+          lattice reduction to see for myself why the real parameters hold up.
+        </P>
       </section>
     </CaseStudyShell>
   )

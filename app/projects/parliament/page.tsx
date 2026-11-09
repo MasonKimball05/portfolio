@@ -217,6 +217,22 @@ export default function ParliamentCaseStudy() {
       </section>
 
       <section className="space-y-4">
+        <SectionHeading title="The Mobile App" subtitle="Native iOS and Android, in testing on TestFlight." />
+        <P>
+          Parliament is getting a native app, built with Expo and React Native in strict TypeScript. It started as a shell that signs in natively and opens the site in a web
+          view that&apos;s already signed in, then native screens replaced web pages one at a time.
+        </P>
+        <DashList
+          items={[
+            "Native sign-in with 2FA and passkeys, tokens kept in the Keychain or Keystore, and a Face ID lock. Concurrent requests share a single token refresh instead of racing each other",
+            "Native screens for votes, elections with runoffs, the resolution builder, committees, attendance with location check-in, the songbook and more; anything not yet native opens signed in",
+            "Push notifications, universal links, live updates over websockets, and over-the-air updates for fixes that don't need a new build",
+            "About 84,000 lines of TypeScript with 72 test files, plus what the App Store requires: account deletion, reporting and muting, and a privacy manifest",
+          ]}
+        />
+      </section>
+
+      <section className="space-y-4">
         <SectionHeading title="What's Next" />
         <DashList
           items={[
@@ -227,10 +243,6 @@ export default function ParliamentCaseStudy() {
               changing any code. On its own branch so far: the chapter&apos;s identity and content (names,
               branding, constitution, songs, landing page) moved out of the code into one place, and a chapter
               table. Next is one shared database where every query has to name its chapter.
-            </>,
-            <>
-              <span className="text-foreground">Mobile app:</span> the first phase is fixing existing bugs in the
-              web app that its API would otherwise inherit.
             </>,
             <>
               <span className="text-foreground">Handoff:</span> documentation, an officer guide built into the app,

@@ -59,6 +59,7 @@ async function getRepos(): Promise<RepoWithLanguages[]> {
   }
 }
 
+import Link from "next/link"
 import { LangDot } from "@/components/lang-dot"
 import { ProjectBrowser } from "@/components/project-browser"
 import { SectionLabel } from "@/components/section-label"
@@ -78,6 +79,12 @@ export default async function Projects() {
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">projects</h1>
           <p className="text-sm text-muted-foreground">
             Things I&apos;ve built, most with a write-up of how they work and what was hard. Filter by what you&apos;re interested in.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Many of them talk to each other:{" "}
+            <Link href="/projects/ecosystem" className="text-foreground underline underline-offset-4 hover:text-primary transition-colors">
+              see how it fits together →
+            </Link>
           </p>
         </div>
 

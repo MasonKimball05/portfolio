@@ -28,7 +28,8 @@ const SKILLS = [
       "SwiftUI",
       "Tauri",
       "Tailwind CSS",
-      "PyQt5",
+      "PyQt6 / Qt WebEngine",
+      "Ruby on Rails",
       "Google Cloud",
       "AWS"
     ],
@@ -36,7 +37,7 @@ const SKILLS = [
   {
     category: "Tools & Infrastructure",
     dot: "bg-slate-400",
-    items: ["PostgreSQL", "SQLite", "Supabase", "Docker", "Git", "GitHub Actions", "Cloudflare", "Linux", "Claude Code", "Ollama"],
+    items: ["PostgreSQL", "SQLite", "Supabase", "Docker", "Git", "GitHub Actions", "Cloudflare", "Linux", "Tailscale", "Playwright", "Claude Code", "Ollama"],
   },
   {
     category: "Areas",
@@ -47,6 +48,8 @@ const SKILLS = [
       "Relational Database Design",
       "REST APIs",
       "LLM Integration (Claude API)",
+      "Post-Quantum Cryptography",
+      "Passkeys / WebAuthn",
     ],
   },
   {
